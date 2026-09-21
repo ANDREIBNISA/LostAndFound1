@@ -39,4 +39,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
+    testImplementation("org.postgresql:postgresql:42.7.4")
 }
