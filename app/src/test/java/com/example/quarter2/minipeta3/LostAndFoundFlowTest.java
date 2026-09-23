@@ -17,7 +17,7 @@ public class LostAndFoundFlowTest {
         int step = 1;
         while (step <= 4) {
             if (step == 1) {
-                // main menu: reported items, then add a new item
+                // main menu: reported items, then add TestRunInstruction new item
                 input.append("1\n");
                 input.append("1\n");
                 input.append("Red Umbrella\n");

@@ -1,0 +1,20 @@
+Android Studio can't run a main() from an Android module's test folder with the green arrow.
+It builds a run script that looks for a source set named unitTest,
+and Android projects don't have one. The JUnit test is unaffected and still runs normally.
+
+The workaround is to compile and run the launcher from the terminal,
+since the classes only use plain Java.
+open the Terminal tab at the bottom, then run these commands from the project root (Windows):
+
+cd app\src\test\java
+javac -d ..\..\..\..\lf-out com\example\quarter2\minipeta3\ConsoleLauncher.java
+java -cp ..\..\..\..\lf-out com.example.quarter2.minipeta3.ConsoleLauncher
+
+in case of "javac" and "java" not being recognized by the terminal use
+
+$env:Path += ";C:\Program Files\Android\Android Studio\jbr\bin"
+
+then run
+javac -d ..\..\..\..\lf-out com\example\quarter2\minipeta3\ConsoleLauncher.java
+java -cp ..\..\..\..\lf-out com.example.quarter2.minipeta3.ConsoleLauncher
+again

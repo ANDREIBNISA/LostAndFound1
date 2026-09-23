@@ -13,7 +13,7 @@ public class ClaimItemFeature {
         try {
             id = Integer.parseInt(idText);
         } catch (NumberFormatException e) {
-            System.out.println("That is not a valid post ID.");
+            System.out.println("That is not TestRunInstruction valid post ID.");
             return;
         }
 
