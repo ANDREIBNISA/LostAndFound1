@@ -1,22 +1,23 @@
 package com.example.quarter2.minipeta3;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class SearchItemFeature {
-
-    public void runFeature(Scanner scanner) {
-        ItemDatabase db = new ItemDatabase();
-
-        System.out.print("Search for: ");
+    public void runFeature(Scanner scanner, SimulatedData data) {
+        System.out.println("--- Search Items ---");
+        System.out.print("Keyword: ");
         String keyword = scanner.nextLine().trim();
         System.out.println(keyword);
 
-        try {
-            ListItemsFeature.printItems(db.searchItems(keyword));
-        } catch (IOException | SQLException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
+        int found = 0;
+        for (Item item : data.getAll()) {
+            if (item.itemName.toLowerCase().contains(keyword.toLowerCase())) {
+                System.out.println(item);
+                found++;
+            }
+        }
+        if (found == 0) {
+            System.out.println("No matches.");
         }
     }
 }
