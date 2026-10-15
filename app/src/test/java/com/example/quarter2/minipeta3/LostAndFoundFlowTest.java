@@ -65,4 +65,42 @@ public class LostAndFoundFlowTest {
         assertTrue(output.contains("Claimed by: Maria Santos"));
         assertTrue(output.contains("Goodbye!"));
     }
+
+    @Test
+    public void badMenuInputDoesNotCrash() {
+        StringBuilder input = new StringBuilder();
+        int attempt = 1;
+        while (attempt <= 2) {
+            if (attempt == 1) {
+                // letters at the main menu
+                input.append("abc\n");
+            } else {
+                // letters at the sub-menu, then back out and exit
+                input.append("1\n");
+                input.append("xyz\n");
+                input.append("3\n");
+                input.append("3\n");
+            }
+            attempt++;
+        }
+
+        ByteArrayInputStream in = new ByteArrayInputStream(input.toString().getBytes());
+        Scanner scanner = new Scanner(in);
+
+        PrintStream originalOut = System.out;
+        ByteArrayOutputStream captured = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(captured));
+
+        try {
+            new MainMenu().run(scanner);
+        } finally {
+            System.setOut(originalOut);
+        }
+
+        String output = captured.toString();
+        System.out.println(output);
+
+        assertTrue(output.contains("Please type a number."));
+        assertTrue(output.contains("Goodbye!"));
+    }
 }

@@ -14,8 +14,16 @@ public class MainMenu {
             System.out.println("3. Exit");
             System.out.print("Choice: ");
 
-            int choice = Integer.parseInt(scanner.nextLine().trim());
-            System.out.println(choice);
+            String choiceText = scanner.nextLine().trim();
+            System.out.println(choiceText);
+
+            int choice;
+            try {
+                choice = Integer.parseInt(choiceText);
+            } catch (NumberFormatException e) {
+                System.out.println("Please type a number.");
+                continue;
+            }
 
             if (choice == 1) {
                 new ViewItemsFeature().runFeature(scanner, data);

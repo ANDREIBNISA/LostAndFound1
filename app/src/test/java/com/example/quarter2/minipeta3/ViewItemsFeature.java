@@ -15,8 +15,16 @@ public class ViewItemsFeature {
             System.out.println("3. Back");
             System.out.print("Choice: ");
 
-            int choice = Integer.parseInt(scanner.nextLine().trim());
-            System.out.println(choice);
+            String choiceText = scanner.nextLine().trim();
+            System.out.println(choiceText);
+
+            int choice;
+            try {
+                choice = Integer.parseInt(choiceText);
+            } catch (NumberFormatException e) {
+                System.out.println("Please type a number.");
+                continue;
+            }
 
             if (choice == 1) {
                 new ReportItemFeature().runFeature(scanner, data);
