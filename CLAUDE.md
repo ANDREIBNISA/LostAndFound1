@@ -75,6 +75,19 @@ The three layouts, all in `app/src/main/res/layout/`:
 
 `MainActivity` only swaps between these screens so they can be seen on a device: Login button goes to Home, "Browse Lost and Found Items" goes to the list, Log Out goes back to Login, and the phone's Back button goes one screen back. Everything else is intentionally non-functional. Do not add data wiring unless the student asks. If asked, keep the console code and the test working.
 
+## Picking this up on the main (home) PC
+
+The latest session was on the second PC. Work moves back to the main PC like this:
+
+1. In the project folder run `git fetch` then `git switch sample-screens` then `git pull`. If the pull complains about untracked `lf-out/` files, move the `lf-out/` folder aside and pull again (see Git notes).
+2. Check `git config user.name` and `git config user.email`. Commits must be authored as `Andrei <peejaysale001@gmail.com>`. Set them for the repo if the main PC shows something else.
+3. In Android Studio let Gradle sync, then run `LostAndFoundFlowTest` (or `gradlew :app:testDebugUnitTest`). Gradle worked on the main PC before. Confirm both tests pass: `fullProgramFlow` and `badMenuInputDoesNotCrash`.
+4. Add `lf-out/` to the root `.gitignore` and save it.
+5. Run the app and check the three screens (login, home, lost/found list). Remember the main PC has about 7 GB of RAM: see the emulator notes, or use a real phone with USB debugging.
+6. Fix any spacing or layout problems in the XML. Keep the IDs that `MainActivity` uses: `loginButton`, `reportedItemsButton`, `logoutButton`.
+
+State of the branch when work left the second PC: `sample-screens` on GitHub was up to date with the second PC, with nothing uncommitted. The emulator and `.android/avd` folder on the second PC do not travel with the repo.
+
 ## Progress so far
 
 Done:
@@ -107,7 +120,7 @@ The student asked for a detailed explanation of how XML works and what it did fo
 ## Git notes
 
 - Remote: `https://github.com/ANDREIBNISA/LostAndFound1.git`.
-- Work is on the branch `sample-screens`. At the school lab: clone the repo, then `git fetch` and `git switch sample-screens`.
+- Work is on the branch `sample-screens`. On another PC: clone the repo (if it is not there yet), then `git fetch` and `git switch sample-screens`.
 - `config.properties` and `local.properties` are git-ignored and will not come along; Android Studio creates `local.properties` on each machine.
 - Identity: commits should be authored as `Andrei`. The repo's local git config (`.git/config`, which is not pushed) is set to `Andrei <peejaysale001@gmail.com>`. The global `~/.gitconfig` on the second PC says `clyde` with a school email, so check `git config user.name` and `git config user.email` before committing on a new machine. Older commits use `andreisalew2010@gmail.com`. GitHub only shows the student's profile on a commit if the commit email is added and verified under GitHub Settings, Emails.
 - Never force-push without the student's yes. `git push --force-with-lease` was used once, with their approval, to fix the author of the latest commit.
