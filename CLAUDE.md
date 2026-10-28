@@ -75,6 +75,39 @@ The three layouts, all in `app/src/main/res/layout/`:
 
 `MainActivity` only swaps between these screens so they can be seen on a device: Login button goes to Home, "Browse Lost and Found Items" goes to the list, Log Out goes back to Login, and the phone's Back button goes one screen back. Everything else is intentionally non-functional. Do not add data wiring unless the student asks. If asked, keep the console code and the test working.
 
+## Worksheet 5 redesign (asked for, then paused)
+
+On 2026-10-28 (on the SHS PC) the student asked to replace everything in `app/src/main/res/layout/` with the UI from their PDF "uhh yeah worksheet number 5" (in their Downloads folder, not in the repo). They cancelled before any project file was changed, so the three old layouts and `MainActivity` are still as described above. If they ask again, this is the design:
+
+- Six screens, all drawn landscape (page size 1123 x 794).
+- 01 Login: a school building photo with a white haze as the background, and a centered dark-blue rounded card. It has the title "FoundIt: An app built by students", "Username/Email/Mobile number" and "Password" boxes, a "Login to Found it" button, a "Forgot password or username" link, "Or", "Login with google" (with the Google G), "Login with MCS Email account", and "Dont have an account? Click here to Sign up!".
+- Screens 02 to 06 share a top bar (app name on the left, a search box "Search for items. search by description" with a magnifier) and a left sidebar (gray avatar with "User12345", then buttons Home, Lost items, Found items, Make a report, Report status, Messages, Settings; the button for the current screen is a darker blue). The content area is dark navy with a light-blue rounded panel.
+- 02 Home: "Suggested items" with rows "High priority searches" and "Recent report" (shown twice). Each row has 5 item cards (picture placeholder, "Item:", "Lost by: User67" or "Found by: User67") and a round "More items" arrow. The page scrolls.
+- 03 Make a report: "Making a report / Step 1/3: Item details". Inputs with sample hints: Item name (Black leather wallet), Item Owner or Item Finder (Juan Dela Cruz), Lost/Found at (Canteen table), Contact details (Email, Mobile number, Alternate contact (Ex. Social Media)). Checkboxes "Lost item" and "Found item". Buttons "Import details from settings" and "Next Step" with a big arrow.
+- 04 Report status: a table with columns Report ID, Item name, Status, Report date and a checkbox. Nine sample rows (L000001 Black leather wallet, F000002 iPair 67 pro max 64tb, L000067 rtx4090, L067676 ryzen 9 9980x3d, L694201 128gb ddr5 ram, F123456 1,000$ worth of cash, F193847, L080910 and L723650 Black leather wallet). "Found" is green, "Not Found" is white, every date is September 11, 2026.
+- 05 Messages: a list of 4 chats (User67890, User54321, User38576, User42198) with an avatar and a one-line preview; the first is highlighted. The right side is empty.
+- 06 Settings: tabs on the left (Account Information, Security, Notifications, App preferences, Other settings). On the right: Account Information (Username, Full name, Email, Number), Contact information (Phone number, Email, Social medias, Alternative contacts), Login Methods (Passkeys: 0 Added, Backup codes: 10 left, two step verification, Alternitive Contacts).
+
+The plan that was being followed: layouts `activity_login`, `activity_home`, `activity_make_report`, `activity_report_status`, `activity_messages`, `activity_settings`, with the top bar and sidebar in their own layout files pulled in with `<include>`; `MainActivity` changed so the sidebar buttons switch screens; and the activity locked to landscape in the manifest, since the whole design is landscape. Points to remember:
+
+- With the MaterialComponents theme, a `<Button>` with its own `android:background` also needs `app:backgroundTint="@null"`, or the theme color paints over it.
+- `targetSdk` is 36, so the app draws behind the status bar. Give the root view `android:fitsSystemWindows="true"`.
+- The building photo for the login background is not in the project.
+- The PDF has typos ("Dont", "Alternitive"). Ask before fixing them.
+
+### Student's uncommitted changes on the SHS PC (2026-10-28)
+
+These were in the working tree, made by the student, and were left uncommitted:
+
+- Five PNGs staged in `app/src/main/res/drawable/`: `manila cathedral school logo.png`, `menu (bars).png`, `more (three dots).png`, `search icon.png`, `settings.png` (each 1048 x 1048). Android resource file names may only use lowercase letters, digits and `_`, so the four names with spaces or brackets will stop the build. Rename them (for example `manila_cathedral_school_logo.png`, `menu_bars.png`, `more_three_dots.png`, `search_icon.png`). Big pictures in plain `drawable/` are scaled up on high-density phones, so `drawable-nodpi/` is a better home for them.
+- `cardview` 1.0.0 added to `gradle/libs.versions.toml` and `app/build.gradle.kts`.
+- `activity_login.xml` was emptied down to a bare `ConstraintLayout`. The old login content is gone, but `MainActivity` still looks up `loginButton`, so the app will crash on start until the login screen is rebuilt. ConstraintLayout is also not a declared dependency.
+
+### Tools on the SHS PC
+
+- Python is not installed (only the Microsoft Store stub), and the Read tool cannot open PDFs because `pdftoppm` is missing. Windows' built-in `Windows.Data.Pdf` API, called from PowerShell, can render PDF pages to PNG instead.
+- Global git identity is `Andrei <andreisalew2010@gmail.com>`, with no repo-local identity set.
+
 ## Picking this up on the main (home) PC
 
 The latest session was on the second PC. Work moves back to the main PC like this:
