@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Landscape item card (found): picture, "Item:" and "Found by: User67". -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
+    android:layout_weight="1"
+    android:background="@drawable/bg_card"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:onClick="onItemCardClick"
+    android:orientation="vertical"
+    android:padding="6dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:contentDescription="Item picture"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_picture_placeholder" />
+
+    <TextView
+        style="@style/FoundIt.CardText"
+        android:layout_marginTop="4dp"
+        android:text="Item:" />
+
+    <TextView
+        style="@style/FoundIt.CardText"
+        android:maxLines="1"
+        android:text="Found by: User67" />
+</LinearLayout>

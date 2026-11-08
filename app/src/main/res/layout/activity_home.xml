@@ -1,57 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Portrait screen: header on top, the screen content in the middle, bottom bar at the bottom. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/screenRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="32dp">
+    android:background="@color/fi_topbar"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/welcomeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Welcome back!"
-        android:textSize="26sp"
-        android:textStyle="bold" />
+    <include layout="@layout/include_header" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="What would you like to do today?"
-        android:textSize="14sp"
-        android:layout_marginBottom="32dp" />
+    <include
+        layout="@layout/content_home"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-    <Button
-        android:id="@+id/reportedItemsButton"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Browse Lost and Found Items"
-        android:layout_marginBottom="12dp" />
-
-    <Button
-        android:id="@+id/reportLostButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Report a Lost Item"
-        android:layout_marginBottom="12dp" />
-
-    <Button
-        android:id="@+id/reportFoundButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Report a Found Item"
-        android:layout_marginBottom="12dp" />
-
-    <Button
-        android:id="@+id/searchButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Search Items"
-        android:layout_marginBottom="32dp" />
-
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Log Out" />
-
+        android:background="@drawable/bg_nav_bar"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemTextColor="@color/nav_item_color"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu" />
 </LinearLayout>

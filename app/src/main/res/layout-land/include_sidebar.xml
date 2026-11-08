@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Landscape sidebar: avatar and the seven screen buttons. Shared by every screen.
+     Each Activity marks its own button as the selected (darker) one. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="140dp"
+    android:layout_height="match_parent"
+    android:background="@color/fi_sidebar"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="6dp"
+        android:paddingBottom="8dp">
+
+        <LinearLayout
+            android:id="@+id/profileRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="4dp"
+            android:paddingBottom="2dp">
+
+            <ImageView
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:contentDescription="Profile picture"
+                android:src="@drawable/ic_avatar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="User12345"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/navHome"
+            style="@style/FoundIt.SidebarButton"
+            android:text="Home" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/navLost"
+            style="@style/FoundIt.SidebarButton"
+            android:text="Lost items" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/navFound"
+            style="@style/FoundIt.SidebarButton"
+            android:text="Found items" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/navReport"
+            style="@style/FoundIt.SidebarButton"
+            android:text="Make a report" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/navStatus"
+            style="@style/FoundIt.SidebarButton"
+            android:text="Report status" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/navMessages"
+            style="@style/FoundIt.SidebarButton"
+            android:text="Messages" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/navSettings"
+            style="@style/FoundIt.SidebarButton"
+            android:text="Settings" />
+    </LinearLayout>
+</ScrollView>

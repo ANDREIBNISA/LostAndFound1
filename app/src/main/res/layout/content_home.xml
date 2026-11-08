@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Portrait Home (from the phone mock): "High priority searches" cards, then "Recent report" tiles. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fi_content_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/FoundIt.SectionTitle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="High priority searches"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/moreItems1"
+                style="@style/FoundIt.SectionTitle"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="4dp"
+                android:text="More items  >"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <include layout="@layout/card_lost" />
+
+        <include layout="@layout/card_lost" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/FoundIt.SectionTitle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Recent report"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/moreItems2"
+                style="@style/FoundIt.SectionTitle"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="4dp"
+                android:text="More items  >"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <include layout="@layout/tile_lost" />
+
+            <include layout="@layout/tile_lost" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

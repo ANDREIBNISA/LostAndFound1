@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Gray "no photo" avatar. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+    <path
+        android:fillColor="#EEF1F0"
+        android:pathData="M50,2a48,48 0 1,0 0.01,0z" />
+    <path
+        android:fillColor="#A8A8A8"
+        android:pathData="M50,7a43,43 0 1,0 0.01,0z" />
+    <group>
+        <clip-path android:pathData="M50,7a43,43 0 1,0 0.01,0z" />
+        <path
+            android:fillColor="#EEF1F0"
+            android:pathData="M50,24a15,15 0 1,0 0.01,0z" />
+        <path
+            android:fillColor="#EEF1F0"
+            android:pathData="M16,100 C16,70 30,58 50,58 C70,58 84,70 84,100 Z" />
+    </group>
+</vector>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Portrait "Recent report" tile. Two of these sit side by side. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="104dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="4dp"
+    android:layout_weight="1"
+    android:background="@drawable/bg_card"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:onClick="onItemCardClick"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <TextView
+        style="@style/FoundIt.CardText"
+        android:text="Item:"
+        android:textSize="14sp" />
+
+    <TextView
+        style="@style/FoundIt.CardText"
+        android:text="Lost by: User67"
+        android:textSize="14sp" />
+</LinearLayout>

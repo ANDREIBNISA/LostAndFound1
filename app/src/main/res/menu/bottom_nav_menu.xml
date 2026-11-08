@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The five buttons in the portrait bottom bar. The ids match the landscape sidebar buttons. -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navHome"
+        android:icon="@drawable/ic_nav_home"
+        android:title="Home" />
+    <item
+        android:id="@+id/navLost"
+        android:icon="@drawable/ic_nav_lost"
+        android:title="Lost" />
+    <item
+        android:id="@+id/navFound"
+        android:icon="@drawable/ic_nav_found"
+        android:title="Found" />
+    <item
+        android:id="@+id/navReport"
+        android:icon="@drawable/ic_nav_report"
+        android:title="Report" />
+    <item
+        android:id="@+id/navSettings"
+        android:icon="@drawable/ic_nav_person"
+        android:title="Settings" />
+</menu>

@@ -7,4 +7,22 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- FoundIt palette, picked from the worksheet 5 design -->
+    <color name="fi_topbar">#2175D0</color>
+    <color name="fi_sidebar">#2F88E9</color>
+    <color name="fi_button">#399AF2</color>
+    <color name="fi_button_active">#297BE0</color>
+    <color name="fi_content_bg">#1E3D58</color>
+    <color name="fi_panel">#43B0F1</color>
+    <color name="fi_input">#057DCD</color>
+    <color name="fi_search_bar">#0E6CBD</color>
+    <color name="fi_login_card">#0A5FA9</color>
+    <color name="fi_outline">#0A2A4A</color>
+    <color name="fi_hint">#A9B8C4</color>
+    <color name="fi_found_green">#55D81C</color>
+    <color name="fi_login_haze">#73FFFFFF</color>
+    <color name="fi_avatar_gray">#A8A8A8</color>
+    <color name="fi_nav_gray">#7A8794</color>
+    <color name="fi_search_text">#1E3D58</color>
 </resources>
