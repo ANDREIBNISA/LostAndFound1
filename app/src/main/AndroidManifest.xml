@@ -23,6 +23,12 @@
             </intent-filter>
         </activity>
 
+        <!-- Sign up. It opens from the "Click here to Sign up!" line on Login. -->
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
         <!-- The other screens. Each one has a portrait layout (res/layout)
              and a landscape layout (res/layout-land), so they turn with the phone. -->
         <activity

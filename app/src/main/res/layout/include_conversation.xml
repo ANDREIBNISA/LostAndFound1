@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The open conversation in Messages: who you are talking to, then the chat bubbles.
+     Their messages are on the left, yours are on the right. Used by both orientations.
+     The bubble texts are placeholders until real messages come from the database. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/conversation"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Header: avatar and name of the other person -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_card_dark"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="Profile picture"
+            android:src="@drawable/ic_avatar" />
+
+        <TextView
+            android:id="@+id/chatTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="User67890"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Their messages (left side) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:contentDescription="Profile picture"
+            android:src="@drawable/ic_avatar" />
+
+        <TextView
+            android:id="@+id/chatBubble"
+            style="@style/FoundIt.Bubble"
+            android:layout_marginStart="6dp"
+            android:text="Hey i found the item you reported." />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:contentDescription="Profile picture"
+            android:src="@drawable/ic_avatar" />
+
+        <TextView
+            style="@style/FoundIt.Bubble"
+            android:layout_marginStart="6dp"
+            android:text="Is it a black leather wallet?" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:contentDescription="Profile picture"
+            android:src="@drawable/ic_avatar" />
+
+        <TextView
+            style="@style/FoundIt.Bubble"
+            android:layout_marginStart="6dp"
+            android:text="It was on a canteen table." />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:contentDescription="Profile picture"
+            android:src="@drawable/ic_avatar" />
+
+        <TextView
+            style="@style/FoundIt.Bubble"
+            android:layout_marginStart="6dp"
+            android:text="Where can we meet?" />
+    </LinearLayout>
+
+    <!-- Your messages (right side) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical|end"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/FoundIt.Bubble"
+            android:layout_marginEnd="6dp"
+            android:text="Yes, that is mine!" />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:contentDescription="Your profile picture"
+            android:src="@drawable/ic_avatar" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center_vertical|end"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/FoundIt.Bubble"
+            android:layout_marginEnd="6dp"
+            android:text="Thank you so much." />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:contentDescription="Your profile picture"
+            android:src="@drawable/ic_avatar" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center_vertical|end"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/FoundIt.Bubble"
+            android:layout_marginEnd="6dp"
+            android:text="Can we meet at the guard house?" />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:contentDescription="Your profile picture"
+            android:src="@drawable/ic_avatar" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center_vertical|end"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/FoundIt.Bubble"
+            android:layout_marginEnd="6dp"
+            android:text="I am free after class." />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:contentDescription="Your profile picture"
+            android:src="@drawable/ic_avatar" />
+    </LinearLayout>
+</LinearLayout>

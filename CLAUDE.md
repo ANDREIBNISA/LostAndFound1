@@ -13,6 +13,14 @@ Android Studio project, Java. A lost and found prototype. There are two parts: a
 - Look before deleting anything. Earlier, a text file was wrongly called a folder.
 - Ask before fixing typos copied from the student's designs (see "Open decisions").
 
+## Claude plugin: Matt Pocock's skills
+
+Claude Code uses the plugin "Skills For Real Engineers" by Matt Pocock (source: `github.com/mattpocock/skills`, version 1.2.3). Its skills are named `mattpocock-skills:<skill>`. The ones that fit this project are `diagnosing-bugs`, `tdd`, `code-review` and `resolving-merge-conflicts`. Load `mattpocock-skills:writing-for-agents` before editing this file.
+
+- The working rules above win over any skill. The skills are written for professional teams, so where a skill and a rule disagree, follow the rule: the student commits and pushes, explanations stay simple, and the UI stays in XML.
+- The plugin is installed per PC for the Windows user, outside the repo, so each PC needs its own install. It was installed on the school PC (Windows user `SHS PC`) on 2026-11-12.
+- Install it with `claude plugin install skills-for-real-engineers@anthropic-plugin-directory`. The Anthropic Directory lists it under that name, and `mattpocock-skills` is not found as an install name. The desktop app has no `claude` terminal command, so run the app's own `claude.exe`: in PowerShell, `Get-Process claude | Select-Object Path` shows it under `AppData\Local\Claude-Data`.
+
 ## Where things live
 
 - Console Java classes and the JUnit test: `app/src/test/java/com/example/quarter2/minipeta3/` (package `com.example.quarter2.minipeta3`). Do not put these in `src/main`.
@@ -60,6 +68,10 @@ Source: the student's PDFs "uhh yeah worksheet number 5.pdf" (7 pages) and "app 
 
 Design pages: 1 Login (landscape), 2 Home (landscape), 3 Home as a portrait phone mock (header with avatar and search, bottom bar), 4 Make a report, 5 Report status, 6 Messages, 7 Settings (all landscape).
 
+### Unfinished: new samples before Firebase (started 2026-11-12)
+
+Read `UI_QUESTIONS.md` in the repo root before touching the UI. It holds the student's new samples (Sign up, Messages revamp, Settings revamp, Login colors), ten questions the student has not answered yet, and the half-finished work. Get the answers first, then build. The sections below describe the app before that work.
+
 ### How the app is built
 
 - One Activity per screen. `LoginActivity` is the launcher. The others extend `BaseActivity`: `HomeActivity`, `LostItemsActivity`, `FoundItemsActivity`, `MakeReportActivity`, `ReportStatusActivity`, `MessagesActivity`, `SettingsActivity`. All are registered in `AndroidManifest.xml`. There is no `MainActivity` any more.
@@ -100,6 +112,7 @@ Design pages: 1 Login (landscape), 2 Home (landscape), 3 Home as a portrait phon
 2. Check `git config user.name` and `git config user.email` before committing (see Git notes).
 3. In Android Studio let Gradle sync, then run `LostAndFoundFlowTest` (or `gradlew :app:testDebugUnitTest`) and confirm both tests pass: `fullProgramFlow` and `badMenuInputDoesNotCrash`.
 4. Run the app (a real phone is lighter than the emulator, see the emulator notes) and check the screens in portrait and landscape.
+5. Install the Claude plugin if this PC does not have it yet (see "Claude plugin: Matt Pocock's skills").
 
 The emulator and `.android/avd` folder do not travel with the repo.
 

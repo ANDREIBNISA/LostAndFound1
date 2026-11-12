@@ -58,6 +58,47 @@
         <item name="android:imeOptions">flagNoExtractUi|actionNext</item>
     </style>
 
+    <!-- White text box with dark text (Login, Sign up, Settings). -->
+    <style name="FoundIt.InputWhite" parent="FoundIt.Input">
+        <item name="android:background">@drawable/bg_input_white</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/fi_hint_dark</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <!-- One of the three parts (MM, DD, YYYY) inside the Date of Birth box. -->
+    <style name="FoundIt.DatePart" parent="FoundIt.InputWhite">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:inputType">number</item>
+    </style>
+
+    <!-- A white box with its value in Settings. -->
+    <style name="FoundIt.SettingsField" parent="FoundIt.InputWhite">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_marginTop">1dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- A chat bubble in the Messages conversation. -->
+    <style name="FoundIt.Bubble" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxWidth">220dp</item>
+        <item name="android:background">@drawable/bg_bubble</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingTop">7dp</item>
+        <item name="android:paddingBottom">7dp</item>
+        <item name="android:textColor">@color/fi_search_text</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <!-- A "Username : ______" line in Settings. -->
     <style name="FoundIt.SettingsLine" parent="">
         <item name="android:layout_width">match_parent</item>

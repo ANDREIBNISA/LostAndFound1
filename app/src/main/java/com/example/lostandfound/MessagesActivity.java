@@ -5,8 +5,9 @@ import android.view.View;
 import android.widget.TextView;
 
 /**
- * Screen 05: Messages. The four chats are written in the XML.
- * Each chat row carries its full message in its android:tag, and its name TextView is tagged "name".
+ * Screen 05: Messages. The four chats and the conversation bubbles are written in the XML
+ * (the conversation is in include_conversation.xml).
+ * Each chat row carries its latest message in its android:tag, and its name TextView is tagged "name".
  */
 public class MessagesActivity extends BaseActivity {
 
@@ -32,18 +33,17 @@ public class MessagesActivity extends BaseActivity {
 
         for (View row : rows) {
             row.setOnClickListener(v -> {
-                // Highlight only the chat that was tapped and show its message.
+                // Highlight only the chat that was tapped.
                 for (View other : rows) {
                     other.setSelected(other == row);
                 }
+                // Show that person's name on top of the conversation and their message in the first bubble.
                 TextView name = row.findViewWithTag("name");
                 chatTitle.setText(name.getText());
                 chatBubble.setText((String) row.getTag());
-                chatTitle.setVisibility(View.VISIBLE);
-                chatBubble.setVisibility(View.VISIBLE);
             });
         }
-        // In the design the first chat starts highlighted, with an empty conversation area.
-        rows[0].setSelected(true);
+        // As in the design, the first chat starts open.
+        rows[0].performClick();
     }
 }

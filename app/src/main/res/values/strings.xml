@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">LostAndFound</string>
+
+    <!-- These texts live here because part of each one is underlined with <u>...</u>. -->
+    <string name="forgot_password"><u>Forgot password or username</u></string>
+    <string name="sign_up_prompt">Dont have an account? <u>Click here</u> to Sign up!</string>
+    <string name="login_prompt">Already have an account? <u>Click here</u> to login!</string>
+    <string name="sign_up_terms">By clicking Sign Up, you are agreeing to our <u>Terms of Use</u> (including arbitration) and acknowledge our <u>Privacy Policy</u>. If you are under 18, you agree that your parent/guardian permits you to create this account and agrees to our Terms of Use.</string>
 </resources>

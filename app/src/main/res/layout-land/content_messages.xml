@@ -225,33 +225,13 @@
         </ScrollView>
     </LinearLayout>
 
-    <!-- Right: conversation (empty until a chat is tapped) -->
-    <LinearLayout
+    <!-- Right: the open conversation. It scrolls when the bubbles do not fit. -->
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="62"
-        android:orientation="vertical"
-        android:padding="14dp">
+        android:padding="8dp">
 
-        <TextView
-            android:id="@+id/chatTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/chatBubble"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_input"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:visibility="gone" />
-    </LinearLayout>
+        <include layout="@layout/include_conversation" />
+    </ScrollView>
 </LinearLayout>

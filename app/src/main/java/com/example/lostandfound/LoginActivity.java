@@ -21,9 +21,9 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.forgotPasswordText).setOnClickListener(v ->
                 Toast.makeText(this, "Password recovery is not available in this prototype",
                         Toast.LENGTH_SHORT).show());
+        // Open Sign up on top of Login. Login stays open underneath, so Back returns here.
         findViewById(R.id.signUpText).setOnClickListener(v ->
-                Toast.makeText(this, "Sign up is not available in this prototype",
-                        Toast.LENGTH_SHORT).show());
+                startActivity(new Intent(this, SignUpActivity.class)));
     }
 
     private void openHome() {

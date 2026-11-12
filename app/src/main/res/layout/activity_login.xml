@@ -60,7 +60,7 @@
 
                 <EditText
                     android:id="@+id/usernameInput"
-                    style="@style/FoundIt.Input"
+                    style="@style/FoundIt.InputWhite"
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
                     android:layout_marginTop="2dp"
@@ -74,7 +74,7 @@
 
                 <EditText
                     android:id="@+id/passwordInput"
-                    style="@style/FoundIt.Input"
+                    style="@style/FoundIt.InputWhite"
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
                     android:layout_marginTop="2dp"
@@ -88,7 +88,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="34dp"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_action_button"
+                    android:background="@drawable/bg_green_button"
                     android:text="Login to Found it"
                     android:textSize="14sp" />
 
@@ -99,7 +99,7 @@
                     android:layout_marginTop="6dp"
                     android:gravity="center"
                     android:padding="2dp"
-                    android:text="Forgot password or username"
+                    android:text="@string/forgot_password"
                     android:textColor="@color/white"
                     android:textSize="11sp"
                     android:textStyle="bold" />
@@ -119,7 +119,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="34dp"
                     android:layout_marginTop="4dp"
-                    android:background="@drawable/bg_action_button"
+                    android:background="@drawable/bg_white_button"
+                    android:textColor="@color/black"
                     android:drawableStart="@drawable/ic_google_g"
                     android:drawablePadding="8dp"
                     android:gravity="center"
@@ -134,7 +135,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="34dp"
                     android:layout_marginTop="6dp"
-                    android:background="@drawable/bg_action_button"
+                    android:background="@drawable/bg_white_button"
+                    android:textColor="@color/black"
                     android:text="Login with MCS Email account"
                     android:textSize="14sp" />
 
@@ -145,7 +147,7 @@
                     android:layout_marginTop="6dp"
                     android:gravity="center"
                     android:padding="2dp"
-                    android:text="Dont have an account? Click here to Sign up!"
+                    android:text="@string/sign_up_prompt"
                     android:textColor="@color/white"
                     android:textSize="11sp" />
             </LinearLayout>
