@@ -33,10 +33,18 @@ android {
     }
 }
 
+// Firebase reads its settings from app/google-services.json (see FIREBASE_SETUP.md). That file is
+// not in git. Without it the app still builds and runs in prototype mode, with no real accounts.
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
+}
+
 dependencies {
     implementation(libs.appcompat)
     implementation(libs.cardview)
     implementation(libs.material)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)

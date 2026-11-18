@@ -212,6 +212,7 @@ public abstract class BaseActivity extends NoSlideActivity {
 
     /** Back to the Login screen and forget every screen that was open. */
     protected void logout() {
+        AuthService.logOut(this);   // ends the real login too, when Firebase is set up
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

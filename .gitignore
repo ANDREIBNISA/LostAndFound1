@@ -14,3 +14,5 @@
 .cxx
 local.properties
 config.properties
+app/google-services.json
+lf-out/

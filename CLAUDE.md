@@ -107,6 +107,14 @@ Step 3, the rest (built; what was done is listed in "What the buttons do"):
 - Grammar fixes approved: "Don't have an account?", "Log in to FoundIt", "Log in with Google", "Log in with MCS Email account", "Click here to log in!", "Alternative contacts", "Two-step verification", "Ex." everywhere. Joke item names stay. Rename the app to "FoundIt" (`app_name` in `strings.xml`).
 - `UI_QUESTIONS.md` was deleted: its questions are settled in this plan.
 
+Firebase (sign-in only, written 2026-11-19 while the student slept):
+
+- `AuthService` is the one class that talks to Firebase Auth: `logIn`, `signUp` (keeps the username as the display name, then signs out so the person logs in on purpose), `sendPasswordReset`, `logOut`, `isLoggedIn`. Screens call only it. `isReal()` is false when Firebase is not configured, and then every method just succeeds, which is the old prototype behaviour.
+- Gradle: the Firebase BoM and `firebase-auth` are dependencies (`gradle/libs.versions.toml`). The `com.google.gms.google-services` plugin is applied in `app/build.gradle.kts` only if `app/google-services.json` exists, so the project builds without it. Checked: it builds with a dummy file on AGP 9.2.1, and without one.
+- `app/google-services.json` is git-ignored; `app/google-services.json.example` has fake values. Copy the real file to other PCs by hand. Never paste it or any key into chat.
+- Only emails can sign in (the login and sign-up boxes show a message for a username or mobile number when Firebase is on). Google and MCS login still open Home.
+- Next, when the student asks: test with their project, then Firestore for reports, items and messages (replacing the placeholder lists and `ChatStore`), then Google sign-in (needs the SHA-1 in Firebase).
+
 The sections below describe the app as it was before this plan; where they disagree with the plan, follow the plan.
 
 ### How the app is built
@@ -123,7 +131,7 @@ The sections below describe the app as it was before this plan; where they disag
 
 ### What the buttons do
 
-- Login: "Log in to FoundIt" needs both boxes filled, then opens Home (no account check until Firebase). The Google and MCS buttons open Home. "Forgot password" shows a message, "Sign up" opens the Sign up screen.
+- Login: "Log in to FoundIt" needs both boxes filled. With Firebase set up (`app/google-services.json` present) it checks the email and password for real through `AuthService`; without it (prototype mode) it opens Home. The Google and MCS buttons open Home either way. "Forgot password" emails a reset link when Firebase is on, otherwise shows a message. "Sign up" opens the Sign up screen. Logging out signs out of Firebase. See "Firebase" below.
 - Sign up: date of birth, username, email or mobile number and password are required; Contact details are optional. "Create Account" returns to Login with a message.
 - Sidebar (landscape) and bottom bar (portrait) open the matching screens. The avatar opens Profile in portrait and Settings in landscape.
 - Search (Enter or the magnifier) shows a message and opens Lost items.
@@ -177,7 +185,7 @@ Not done yet:
 - Add `lf-out/` to the root `.gitignore` and save it.
 - `config.properties.example` still has what looks like a real Supabase host and username. Replace them with placeholders.
 - Run the new screens on a phone or emulator and fix what looks wrong. `gradlew :app:testDebugUnitTest` passes (both console tests, 2026-11-18).
-- Firebase and any data wiring: not started. Do not add them unless the student asks.
+- Firebase: the sign-in code is written and builds (branch `firebase-setup`, see "Firebase" in the UI plan section), but the student still has to make the Firebase project and add `app/google-services.json` by following `FIREBASE_SETUP.md`. Nothing is tested against a real project. Firestore (reports, items, messages) and Google sign-in are not started. Do not add them unless the student asks.
 - Optional, only if asked: using the school logo, moving text to `strings.xml`.
 
 ## XML explanation (given in chat, not saved to a file)

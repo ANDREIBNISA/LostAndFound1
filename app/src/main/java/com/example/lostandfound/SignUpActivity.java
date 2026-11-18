@@ -1,6 +1,7 @@
 package com.example.lostandfound;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -46,8 +47,29 @@ public class SignUpActivity extends NoSlideActivity {
             return;
         }
 
-        toast("Account created for " + username + " (prototype). You can log in now.");
-        finish();
+        // Real accounts are made with an email address (Firebase), so a mobile number is not enough yet.
+        if (AuthService.isReal(this) && !email.contains("@")) {
+            toast("Please sign up with your email address");
+            return;
+        }
+
+        View createButton = findViewById(R.id.createAccountButton);
+        createButton.setEnabled(false);   // so a second tap does not send it twice
+        AuthService.signUp(this, email, password, username, new AuthService.Result() {
+            @Override
+            public void onSuccess() {
+                toast(AuthService.isReal(SignUpActivity.this)
+                        ? "Account created. You can log in now."
+                        : "Account created for " + username + " (prototype). You can log in now.");
+                finish();
+            }
+
+            @Override
+            public void onError(String message) {
+                createButton.setEnabled(true);
+                toast(message);
+            }
+        });
     }
 
     /** The words typed into a text box, without spaces at the start or end. */
