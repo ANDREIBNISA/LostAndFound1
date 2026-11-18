@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Portrait Report status: a table with a header row and nine report rows. -->
+<!-- Portrait Reports screen: a "Make a report" button on top, the current reports, and a
+     "Previous reports" section that starts closed. When there are no current reports, the
+     empty message and "Create a report" button take their place. -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,379 +10,119 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:background="@drawable/bg_panel"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="14dp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginBottom="6dp"
-            android:text="Report status"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            style="@style/FoundIt.SectionTitle"
+            android:text="Reports"
+            android:textSize="22sp" />
 
-        <!-- Header row. The box at the end ticks every row. -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/makeReportButton"
+            style="@style/FoundIt.Button"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_action_button"
+            android:text="Make a report"
+            android:textSize="16sp" />
+
+        <!-- Shown only when there are no current reports. -->
         <LinearLayout
-            style="@style/FoundIt.Row"
-            android:layout_marginTop="0dp"
-                android:layout_height="wrap_content"
-                android:minHeight="40dp">
-
-            <TextView
-                style="@style/FoundIt.Cell"
-                android:layout_weight="1.3"
-                android:text="Report ID"
-                android:textSize="11sp" />
-
-            <TextView
-                style="@style/FoundIt.Cell"
-                android:layout_marginStart="4dp"
-                android:layout_weight="3"
-                android:gravity="start|center_vertical"
-                android:text="Item name"
-                android:textSize="12sp" />
-
-            <TextView
-                style="@style/FoundIt.Cell"
-                android:layout_weight="1.3"
-                android:text="Status"
-                android:textSize="11sp" />
-
-            <TextView
-                style="@style/FoundIt.Cell"
-                android:layout_weight="2"
-                android:text="Report date"
-                android:textSize="12sp" />
-
-            <CheckBox
-                android:id="@+id/selectAllCheck"
-                style="@style/FoundIt.CellCheck" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/reportTable"
+            android:id="@+id/reportsEmpty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:contentDescription="No reports"
+                android:src="@drawable/ic_nav_reports" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="You currently don't have reports right now."
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/createReportButton"
+                style="@style/FoundIt.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_small_button"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:text="Create a report"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <!-- The current reports. The cards are copies of item_report.xml made by Java. -->
+        <LinearLayout
+            android:id="@+id/currentReportsGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
             android:orientation="vertical">
 
-            <LinearLayout
-                style="@style/FoundIt.Row"
-                android:layout_height="wrap_content"
-                android:minHeight="40dp">
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="1.3"
-                    android:text="L000001"
-                    android:textSize="11sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="3"
-                    android:gravity="start|center_vertical"
-                    android:text="Black leather wallet"
-                    android:textSize="12sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="1.3"
-                    android:text="Found"
-                    android:textColor="@color/fi_found_green"
-                    android:textSize="11sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="2"
-                    android:text="September 11, 2026"
-                    android:textSize="10sp" />
-
-                <CheckBox style="@style/FoundIt.CellCheck" />
-            </LinearLayout>
+            <TextView
+                style="@style/FoundIt.Label"
+                android:text="Current reports"
+                android:textSize="14sp" />
 
             <LinearLayout
-                style="@style/FoundIt.Row"
+                android:id="@+id/currentReportsList"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="40dp">
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="1.3"
-                    android:text="F000002"
-                    android:textSize="11sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="3"
-                    android:gravity="start|center_vertical"
-                    android:text="iPair 67 pro max 64tb"
-                    android:textSize="12sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="1.3"
-                    android:text="Found"
-                    android:textColor="@color/fi_found_green"
-                    android:textSize="11sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="2"
-                    android:text="September 11, 2026"
-                    android:textSize="10sp" />
-
-                <CheckBox style="@style/FoundIt.CellCheck" />
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/FoundIt.Row"
-                android:layout_height="wrap_content"
-                android:minHeight="40dp">
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="1.3"
-                    android:text="L000067"
-                    android:textSize="11sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="3"
-                    android:gravity="start|center_vertical"
-                    android:text="rtx4090"
-                    android:textSize="12sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="1.3"
-                    android:text="Found"
-                    android:textColor="@color/fi_found_green"
-                    android:textSize="11sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="2"
-                    android:text="September 11, 2026"
-                    android:textSize="10sp" />
-
-                <CheckBox style="@style/FoundIt.CellCheck" />
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/FoundIt.Row"
-                android:layout_height="wrap_content"
-                android:minHeight="40dp">
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="1.3"
-                    android:text="L067676"
-                    android:textSize="11sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="3"
-                    android:gravity="start|center_vertical"
-                    android:text="ryzen 9 9980x3d"
-                    android:textSize="12sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="1.3"
-                    android:text="Not Found"
-                    android:textColor="@color/white"
-                    android:textSize="11sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="2"
-                    android:text="September 11, 2026"
-                    android:textSize="10sp" />
-
-                <CheckBox style="@style/FoundIt.CellCheck" />
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/FoundIt.Row"
-                android:layout_height="wrap_content"
-                android:minHeight="40dp">
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="1.3"
-                    android:text="L694201"
-                    android:textSize="11sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="3"
-                    android:gravity="start|center_vertical"
-                    android:text="128gb ddr5 ram"
-                    android:textSize="12sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="1.3"
-                    android:text="Found"
-                    android:textColor="@color/fi_found_green"
-                    android:textSize="11sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="2"
-                    android:text="September 11, 2026"
-                    android:textSize="10sp" />
-
-                <CheckBox style="@style/FoundIt.CellCheck" />
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/FoundIt.Row"
-                android:layout_height="wrap_content"
-                android:minHeight="40dp">
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="1.3"
-                    android:text="F123456"
-                    android:textSize="11sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="3"
-                    android:gravity="start|center_vertical"
-                    android:text="1,000$ worth of cash"
-                    android:textSize="12sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="1.3"
-                    android:text="Found"
-                    android:textColor="@color/fi_found_green"
-                    android:textSize="11sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="2"
-                    android:text="September 11, 2026"
-                    android:textSize="10sp" />
-
-                <CheckBox style="@style/FoundIt.CellCheck" />
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/FoundIt.Row"
-                android:layout_height="wrap_content"
-                android:minHeight="40dp">
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="1.3"
-                    android:text="F193847"
-                    android:textSize="11sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="3"
-                    android:gravity="start|center_vertical"
-                    android:text="Black leather wallet"
-                    android:textSize="12sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="1.3"
-                    android:text="Found"
-                    android:textColor="@color/fi_found_green"
-                    android:textSize="11sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="2"
-                    android:text="September 11, 2026"
-                    android:textSize="10sp" />
-
-                <CheckBox style="@style/FoundIt.CellCheck" />
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/FoundIt.Row"
-                android:layout_height="wrap_content"
-                android:minHeight="40dp">
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="1.3"
-                    android:text="L080910"
-                    android:textSize="11sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="3"
-                    android:gravity="start|center_vertical"
-                    android:text="Black leather wallet"
-                    android:textSize="12sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="1.3"
-                    android:text="Not Found"
-                    android:textColor="@color/white"
-                    android:textSize="11sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="2"
-                    android:text="September 11, 2026"
-                    android:textSize="10sp" />
-
-                <CheckBox style="@style/FoundIt.CellCheck" />
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/FoundIt.Row"
-                android:layout_height="wrap_content"
-                android:minHeight="40dp">
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="1.3"
-                    android:text="L723650"
-                    android:textSize="11sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="3"
-                    android:gravity="start|center_vertical"
-                    android:text="Black leather wallet"
-                    android:textSize="12sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="1.3"
-                    android:text="Found"
-                    android:textColor="@color/fi_found_green"
-                    android:textSize="11sp" />
-
-                <TextView
-                    style="@style/FoundIt.Cell"
-                    android:layout_weight="2"
-                    android:text="September 11, 2026"
-                    android:textSize="10sp" />
-
-                <CheckBox style="@style/FoundIt.CellCheck" />
-            </LinearLayout>
+                android:orientation="vertical" />
         </LinearLayout>
+
+        <!-- Previous reports: closed until you tap the row. -->
+        <LinearLayout
+            android:id="@+id/previousHeader"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_card_dark"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="14dp"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Previous reports"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/previousChevron"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:contentDescription="Show or hide previous reports"
+                android:src="@drawable/ic_chevron_down" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/previousReportsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" />
     </LinearLayout>
 </ScrollView>

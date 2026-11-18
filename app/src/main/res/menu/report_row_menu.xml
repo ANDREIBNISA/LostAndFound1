@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pop-up from the three dots on one report in the Reports screen. -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/reportMarkFound"
+        android:title="Mark as found" />
+    <item
+        android:id="@+id/reportEdit"
+        android:title="Edit report" />
+    <item
+        android:id="@+id/reportDelete"
+        android:title="Delete" />
+</menu>

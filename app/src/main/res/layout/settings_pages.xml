@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- The five Settings pages. Only one is visible at a time; the tabs (landscape: left column,
-     portrait: row on top) choose which. Used by both orientations. -->
+     portrait: row on top) choose which. Used by both orientations.
+     The Account page follows the student's sample pictures: a heading per group, a pencil at
+     the end of each editable line, white boxes with the label above for contact details. -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -13,39 +15,49 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="12dp">
 
+            <!-- Account info: tap a pencil to edit that line -->
             <TextView
-                style="@style/FoundIt.Label"
-                android:text="Account Information"
-                android:textSize="16sp" />
+                style="@style/FoundIt.SettingsHeading"
+                android:layout_marginTop="2dp"
+                android:text="Account info" />
 
-            <LinearLayout
-                style="@style/FoundIt.SettingsLine"
-                android:layout_marginTop="4dp">
+            <LinearLayout style="@style/FoundIt.SettingsLine">
 
                 <TextView
                     style="@style/FoundIt.Label"
-                    android:text="Username :"
+                    android:text="Display name:"
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/usernameField"
-                    style="@style/FoundIt.Blank"
-                    android:inputType="text" />
+                    style="@style/FoundIt.SettingsValue"
+                    android:inputType="textPersonName"
+                    android:tag="value"
+                    android:text="John Doe" />
+
+                <ImageView
+                    style="@style/FoundIt.PencilButton"
+                    android:onClick="onEditPencilClick" />
             </LinearLayout>
 
             <LinearLayout style="@style/FoundIt.SettingsLine">
 
                 <TextView
                     style="@style/FoundIt.Label"
-                    android:text="Full name :"
+                    android:text="Username:"
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/fullNameField"
-                    style="@style/FoundIt.Blank"
-                    android:inputType="textPersonName" />
+                    style="@style/FoundIt.SettingsValue"
+                    android:inputType="text"
+                    android:tag="value"
+                    android:text="User12345" />
+
+                <ImageView
+                    style="@style/FoundIt.PencilButton"
+                    android:onClick="onEditPencilClick" />
             </LinearLayout>
 
             <LinearLayout style="@style/FoundIt.SettingsLine">
@@ -56,96 +68,310 @@
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/emailField"
-                    style="@style/FoundIt.Blank"
-                    android:inputType="textEmailAddress" />
+                    style="@style/FoundIt.SettingsValue"
+                    android:inputType="textEmailAddress"
+                    android:tag="value"
+                    android:text="johndoe26@email.com" />
+
+                <TextView
+                    style="@style/FoundIt.VerifiedChip"
+                    android:layout_marginEnd="4dp" />
+
+                <ImageView
+                    style="@style/FoundIt.PencilButton"
+                    android:onClick="onEditPencilClick" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/fi_button" />
+
+            <!-- Login Methods: information lines, plus a Manage button for passkeys -->
+            <TextView
+                style="@style/FoundIt.SettingsHeading"
+                android:text="Login Methods" />
+
+            <LinearLayout style="@style/FoundIt.SettingsLine">
+
+                <TextView
+                    style="@style/FoundIt.Label"
+                    android:text="Passkey:"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:text="0 passkeys added"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/FoundIt.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:background="@drawable/bg_small_button"
+                    android:onClick="onManagePasskeysClick"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:text="Manage"
+                    android:textSize="13sp" />
             </LinearLayout>
 
             <LinearLayout style="@style/FoundIt.SettingsLine">
 
                 <TextView
                     style="@style/FoundIt.Label"
-                    android:text="Number:"
+                    android:text="Password:"
                     android:textSize="14sp" />
 
-                <EditText
-                    android:id="@+id/numberField"
-                    style="@style/FoundIt.Blank"
-                    android:imeOptions="flagNoExtractUi|actionDone"
-                    android:inputType="phone" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingStart="4dp"
+                    android:text="••••••••"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    style="@style/FoundIt.PencilButton"
+                    android:onClick="onChangePasswordClick" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/fi_button" />
-
-            <TextView
-                style="@style/FoundIt.Label"
-                android:layout_marginTop="6dp"
-                android:text="Contact information"
-                android:textSize="16sp" />
-
             <TextView
                 style="@style/FoundIt.Label"
                 android:layout_marginTop="4dp"
-                android:text="Phone number:"
-                android:textSize="14sp" />
-
-            <TextView
-                style="@style/FoundIt.Label"
-                android:layout_marginTop="2dp"
-                android:text="Email:"
-                android:textSize="14sp" />
-
-            <TextView
-                style="@style/FoundIt.Label"
-                android:layout_marginTop="2dp"
-                android:text="Social medias:"
-                android:textSize="14sp" />
-
-            <TextView
-                style="@style/FoundIt.Label"
-                android:layout_marginTop="2dp"
-                android:text="Alternative contacts"
-                android:textSize="14sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/fi_button" />
-
-            <TextView
-                style="@style/FoundIt.Label"
-                android:layout_marginTop="6dp"
-                android:text="Login Methods"
-                android:textSize="16sp" />
-
-            <TextView
-                style="@style/FoundIt.Label"
-                android:layout_marginTop="4dp"
-                android:text="Passkeys: 0 Added"
-                android:textSize="14sp" />
-
-            <TextView
-                style="@style/FoundIt.Label"
-                android:layout_marginTop="2dp"
                 android:text="Backup codes: 10 left"
                 android:textSize="14sp" />
 
             <TextView
                 style="@style/FoundIt.Label"
-                android:layout_marginTop="2dp"
-                android:text="two step verification:"
+                android:layout_marginTop="6dp"
+                android:text="Two-step verification: Off"
                 android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/fi_button" />
+
+            <!-- Personal -->
+            <TextView
+                style="@style/FoundIt.SettingsHeading"
+                android:text="Personal" />
+
+            <LinearLayout style="@style/FoundIt.SettingsLine">
+
+                <TextView
+                    style="@style/FoundIt.Label"
+                    android:text="Birthday:"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="Aug 9, 2010"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    style="@style/FoundIt.VerifiedChip"
+                    android:layout_marginStart="10dp" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/FoundIt.Label"
+                android:layout_marginTop="10dp"
+                android:text="Gender (Optional)"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/genderMale"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_tab"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:text="Male"
+                    android:textColor="@color/tab_text_color"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/genderFemale"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_tab"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:text="Female"
+                    android:textColor="@color/tab_text_color"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/FoundIt.Label"
+                android:layout_marginTop="10dp"
+                android:text="Language"
+                android:textSize="14sp" />
+
+            <Spinner
+                android:id="@+id/languageSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_spinner"
+                android:entries="@array/languages"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                android:paddingStart="6dp"
+                android:paddingEnd="36dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="14dp"
+                android:background="@color/fi_button" />
+
+            <!-- Contact information: label above a white box -->
+            <TextView
+                style="@style/FoundIt.SettingsHeading"
+                android:text="Contact information" />
+
+            <TextView
+                style="@style/FoundIt.Label"
+                android:layout_marginTop="6dp"
+                android:text="Phone number"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/contactPhoneField"
+                style="@style/FoundIt.SettingsField"
+                android:layout_height="40dp"
+                android:hint="e.g. +63 912 345 6789"
+                android:inputType="phone" />
+
+            <TextView
+                style="@style/FoundIt.Label"
+                android:layout_marginTop="4dp"
+                android:text="Email"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/contactEmailField"
+                style="@style/FoundIt.SettingsField"
+                android:layout_height="40dp"
+                android:hint="e.g. name@email.com"
+                android:inputType="textEmailAddress" />
+
+            <TextView
+                style="@style/FoundIt.Label"
+                android:layout_marginTop="4dp"
+                android:text="Alternative email"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/contactAltEmailField"
+                style="@style/FoundIt.SettingsField"
+                android:layout_height="40dp"
+                android:hint="e.g. name.backup@email.com"
+                android:inputType="textEmailAddress" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/fi_button" />
+
+            <!-- Alternative contacts: social media people can use to reach you -->
+            <TextView
+                style="@style/FoundIt.SettingsHeading"
+                android:text="Alternative contacts" />
 
             <TextView
                 style="@style/FoundIt.Label"
                 android:layout_marginTop="2dp"
-                android:text="Alternitive Contacts:"
+                android:text="Social media people can use to reach you."
+                android:textSize="12sp"
+                android:textStyle="normal" />
+
+            <TextView
+                style="@style/FoundIt.Label"
+                android:layout_marginTop="8dp"
+                android:text="Facebook"
                 android:textSize="14sp" />
+
+            <EditText
+                style="@style/FoundIt.SettingsField"
+                android:layout_height="40dp"
+                android:hint="e.g. www.facebook.com/yourname"
+                android:inputType="textUri" />
+
+            <TextView
+                style="@style/FoundIt.Label"
+                android:layout_marginTop="4dp"
+                android:text="X (formerly Twitter)"
+                android:textSize="14sp" />
+
+            <EditText
+                style="@style/FoundIt.SettingsField"
+                android:layout_height="40dp"
+                android:hint="e.g. @yourname"
+                android:inputType="text" />
+
+            <TextView
+                style="@style/FoundIt.Label"
+                android:layout_marginTop="4dp"
+                android:text="Instagram"
+                android:textSize="14sp" />
+
+            <EditText
+                style="@style/FoundIt.SettingsField"
+                android:layout_height="40dp"
+                android:hint="e.g. www.instagram.com/yourname"
+                android:inputType="textUri" />
+
+            <TextView
+                style="@style/FoundIt.Label"
+                android:layout_marginTop="4dp"
+                android:text="Messenger"
+                android:textSize="14sp" />
+
+            <EditText
+                style="@style/FoundIt.SettingsField"
+                android:layout_height="40dp"
+                android:hint="e.g. m.me/yourname"
+                android:imeOptions="flagNoExtractUi|actionDone"
+                android:inputType="textUri" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/saveSettingsButton"
+                style="@style/FoundIt.Button"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/bg_action_button"
+                android:text="Save changes"
+                android:textSize="15sp" />
         </LinearLayout>
     </ScrollView>
 
@@ -162,7 +388,7 @@
         <TextView
             style="@style/FoundIt.Label"
             android:layout_marginTop="6dp"
-            android:text="Password, passkeys and two step verification will be managed here."
+            android:text="Password, passkeys and two-step verification will be managed here."
             android:textSize="13sp" />
     </LinearLayout>
 

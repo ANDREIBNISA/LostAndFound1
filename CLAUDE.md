@@ -6,7 +6,7 @@ Android Studio project, Java. A lost and found prototype. There are two parts: a
 
 - Do not add Claude as a co-author, contributor, or "generated with" line to commits or pull requests.
 - The student does their own commits and pushes. Only commit or push if they ask.
-- The teacher requires the UI to be built in XML. Put everything you can see on screen in XML layouts (cards, table rows, chat rows, settings pages). Java only handles taps and opening the next screen. Do not build views in Java loops.
+- The teacher requires the UI to be built in XML. Put everything you can see on screen in XML layouts (cards, table rows, chat rows, settings pages). Java only handles taps and opening the next screen. A repeated row or card may be copied by Java, but its design stays in XML (see the agreed UI plan).
 - Do not run `git init` in a folder that already has a `.git`. A fresh `git init` earlier caused "unrelated histories" errors.
 - Never put real credentials in the repo. A `config.properties` (git-ignored) with a committed `config.properties.example` is the plan for when a database is added later.
 - Never paste or repeat tokens or passwords from the terminal in chat. Tell the student to revoke a token on GitHub if one was exposed.
@@ -68,17 +68,48 @@ Source: the student's PDFs "uhh yeah worksheet number 5.pdf" (7 pages) and "app 
 
 Design pages: 1 Login (landscape), 2 Home (landscape), 3 Home as a portrait phone mock (header with avatar and search, bottom bar), 4 Make a report, 5 Report status, 6 Messages, 7 Settings (all landscape).
 
-### Unfinished: new samples before Firebase (started 2026-11-12)
+### Agreed UI plan before Firebase (settled with the student 2026-11-18)
 
-Read `UI_QUESTIONS.md` in the repo root before touching the UI. It holds the student's new samples (Sign up, Messages revamp, Settings revamp, Login colors), ten questions the student has not answered yet, and the half-finished work. Get the answers first, then build. The sections below describe the app before that work.
+The UI is being finished before Firebase is added. Real accounts come later through Firebase, with email and password as the main sign-in. Until then the login buttons only open Home. Build in three steps. The student runs the app after each step and says what to change.
+
+Rules for all steps:
+
+- Landscape keeps its sidebar layout (it is for tablets and desktops). The changes below are portrait only, except Profile and Settings, which work in both.
+- A repeated row or card is one small XML design (`item_*.xml`) that Java copies once per placeholder item. The student approved this because a database will need it. Teacher check pending: ask whether this counts as "XML for everything".
+- All names, items and numbers are placeholders. The header name stays `User12345`.
+- The student will send new sample screens later. Settings contact values stay as they are until then. For each screen Claude designs, ask the student how it should look.
+
+All three steps are built and `assembleDebug` passes (2026-11-18). The student has not run steps 2 and 3 on a screen yet, so expect small layout fixes. Claude has not seen any of it running.
+
+Step 1, portrait navigation (built):
+
+- Bottom bar: Home | Items | Messages | Reports | Profile. Settings and Log out are in the three-dots menu. Ids: `navHome`, `navItems`, `navMessages`, `navStatus` (Reports), `navProfile`.
+- Items: Lost and Found screens with a Lost / Found tab strip (`include_items_tabs.xml`).
+- Reports (`content_report_status.xml`, portrait): "Make a report" button on top, current reports as cards with a three-dots menu (Mark as found, Edit report, Delete), a "Previous reports" row that starts closed, and the empty message "You currently don't have reports right now." with a "Create a report" button when no current report is left (delete them all to see it). Design: `item_report.xml`.
+- Profile (`ProfileActivity`, both orientations): avatar, username, name, Reports / Found / Returned numbers, plain information lines, Edit profile (opens Settings) and Closed reports buttons, four icon tabs (My reports, Found items, Returned items, Saved) over cards from `item_profile_card.xml`. Saved is empty on purpose to show the empty message.
+
+Step 2, Settings rewrite (built, both orientations), following the student's sample pictures in our colors. The contact boxes have only hint text, because the student said the sample values were wrong and will send new samples:
+
+- Keep the five tabs. The Account page scrolls: Account info (Display name, Username, Email with a Verified tag, each with a pencil icon), Login Methods (Passkey with a Manage button, Password), Personal (Birthday, Gender, Language; no Age Group), Contact information, then Social networks as alternative contacts (Facebook, X, Instagram, Messenger, label above a white box). One "Save changes" button at the bottom that only shows a message.
+- Login Methods stays plain information lines.
+
+Step 3, the rest (built; what was done is listed in "What the buttons do"):
+
+- Sign up: every box is required except Contact details (it can be set later in Settings). Login: "Log in to FoundIt" shows a message when a box is empty, otherwise opens Home. Google and MCS buttons open Home. Making a report step 1: every box must be filled.
+- New screens designed by Claude: Making a report steps 2 and 3, item details, and Forgot password (stays a message for now).
+- Messages: portrait chat opens full screen with a Back arrow; add a typing box and Send button (Send adds a bubble); add example sentences to the bubbles.
+- Grammar fixes approved: "Don't have an account?", "Log in to FoundIt", "Log in with Google", "Log in with MCS Email account", "Click here to log in!", "Alternative contacts", "Two-step verification", "Ex." everywhere. Joke item names stay. Rename the app to "FoundIt" (`app_name` in `strings.xml`).
+- `UI_QUESTIONS.md` was deleted: its questions are settled in this plan.
+
+The sections below describe the app as it was before this plan; where they disagree with the plan, follow the plan.
 
 ### How the app is built
 
-- One Activity per screen. `LoginActivity` is the launcher. The others extend `BaseActivity`: `HomeActivity`, `LostItemsActivity`, `FoundItemsActivity`, `MakeReportActivity`, `ReportStatusActivity`, `MessagesActivity`, `SettingsActivity`. All are registered in `AndroidManifest.xml`. There is no `MainActivity` any more.
+- One Activity per screen. `LoginActivity` is the launcher. The others extend `BaseActivity`: `HomeActivity`, `LostItemsActivity`, `FoundItemsActivity`, `MakeReportActivity`, `ReportStatusActivity`, `MessagesActivity`, `ProfileActivity`, `SettingsActivity`, `ReportStep2Activity`, `ReportStep3Activity`, `ItemDetailsActivity`. `SignUpActivity` and `ChatActivity` (a full-screen conversation, portrait) extend `AppCompatActivity` because they have no bottom bar. `ChatHelper` makes the typing box work. All are registered in `AndroidManifest.xml`. There is no `MainActivity` any more.
 - `BaseActivity` holds what every screen shares: the sidebar (landscape) or bottom bar (portrait), the three-dots menu, the search box, `openScreen(int navId)` (uses `CLEAR_TOP | SINGLE_TOP | NO_ANIMATION` so screens are not stacked twice), `logout()`, and `onItemCardClick` (called from XML with `android:onClick`).
 - Every screen has two layouts with the same file name: `res/layout/` is portrait, `res/layout-land/` is landscape. Android picks the right one when the phone turns, so the app is not locked to one orientation. `activity_login.xml` exists only in `layout/` and works for both.
 - Naming: `activity_X.xml` is the screen frame (header or top bar and sidebar, plus an `<include>` of the content), `content_X.xml` is the screen body, `card_lost.xml` / `card_found.xml` are item cards (wide in portrait, small squares in landscape), `tile_lost.xml` is the portrait "Recent report" tile, `include_header.xml` is the portrait header, `include_top_bar.xml` and `include_sidebar.xml` are landscape only, and `settings_pages.xml` holds the five Settings pages for both orientations.
-- Buttons that open screens use the same ids in both orientations: `navHome`, `navLost`, `navFound`, `navReport`, `navStatus`, `navMessages`, `navSettings` (sidebar buttons in landscape, bottom bar items in portrait via `menu/bottom_nav_menu.xml`). `navLogout` exists only in `menu/more_menu.xml`. Other important ids: `bottomNav`, `moreButton`, `profileRow`, `searchInput`, `searchIcon`, `loginButton`, `googleLoginButton`, `mcsLoginButton`, `forgotPasswordText`, `signUpText`, `moreItems1` to `moreItems4`, `itemNameInput`, `lostItemCheck`, `foundItemCheck`, `importDetailsButton`, `nextStepButton`, `reportTable`, `selectAllCheck`, `chatRow1` to `chatRow4`, `chatTitle`, `chatBubble`, `tabAccount` to `tabOther`, `pageAccount` to `pageOther`, `logoutButton`. Java does null checks because some ids exist in only one orientation.
+- Buttons that open screens: `navHome`, `navLost`, `navFound`, `navReport`, `navStatus`, `navMessages`, `navSettings` are the landscape sidebar buttons. The portrait bottom bar (`menu/bottom_nav_menu.xml`) has `navHome`, `navItems`, `navMessages`, `navStatus` (Reports) and `navProfile`; `BaseActivity.portraitTabId()` decides which tab lights up (Lost and Found light Items, Make a report and its steps light Reports, Settings lights Profile). `navSettings` and `navLogout` are in `menu/more_menu.xml` (portrait three dots). Other important ids: `bottomNav`, `moreButton`, `profileRow`, `searchInput`, `searchIcon`, `loginButton`, `googleLoginButton`, `mcsLoginButton`, `forgotPasswordText`, `signUpText`, `moreItems1` to `moreItems4`, `itemNameInput`, `lostItemCheck`, `foundItemCheck`, `importDetailsButton`, `nextStepButton`, `reportTable`, `selectAllCheck`, `chatRow1` to `chatRow4`, `chatTitle`, `chatBubble`, `tabAccount` to `tabOther`, `pageAccount` to `pageOther`, `logoutButton`. Java does null checks because some ids exist in only one orientation.
 - Colors are in `values/colors.xml` (`fi_*` names, sampled from the design). Shared styles are `FoundIt.*` in `values/themes.xml`. Portrait uses the same palette as landscape, not the brighter blue of the page-3 mock.
 - Buttons are `androidx.appcompat.widget.AppCompatButton` with the `FoundIt.Button` style (it sets `backgroundTint` to `@null`). With the MaterialComponents theme a plain `<Button>` with its own `android:background` gets painted over by the theme color.
 - Icons: vector drawables for the magnifier, arrows, avatar, bottom bar icons, Google G, three dots and checkbox. `drawable-nodpi/` holds `login_building.jpg` (extracted from the worksheet PDF), `school_logo.png` and the four icon PNGs from the student (`icon_menu_bars.png`, `icon_more_three_dots.png`, `icon_search_png.png`, `icon_settings_gear.png`). The PNGs have white backgrounds and are not used yet.
@@ -86,20 +117,23 @@ Read `UI_QUESTIONS.md` in the repo root before touching the UI. It holds the stu
 
 ### What the buttons do
 
-- Login: every login button opens Home (no account check). "Forgot password" and "Sign up" only show a message.
-- Sidebar, bottom bar and the avatar open the matching screens. The current screen is highlighted. In portrait, Report status, Messages and Log out are in the three-dots menu.
+- Login: "Log in to FoundIt" needs both boxes filled, then opens Home (no account check until Firebase). The Google and MCS buttons open Home. "Forgot password" shows a message, "Sign up" opens the Sign up screen.
+- Sign up: date of birth, username, email or mobile number and password are required; Contact details are optional. "Create Account" returns to Login with a message.
+- Sidebar (landscape) and bottom bar (portrait) open the matching screens. The avatar opens Profile in portrait and Settings in landscape.
 - Search (Enter or the magnifier) shows a message and opens Lost items.
-- Home: "More items" opens Lost items (High priority searches) or Report status (Recent report). Item cards show "Item details are not built yet".
-- Make a report: ticking Lost or Found un-ticks the other. "Import details from settings" fills sample contact details. "Next Step" shows a message and opens Report status, because steps 2 and 3 are not designed.
-- Report status: the header checkbox ticks every row.
-- Messages: tapping a chat highlights it and shows its message. In portrait the conversation appears under the list.
-- Settings: the five tabs switch pages. "Log out" is under "Other settings" and returns to Login.
+- Home: "More items" opens Lost items (High priority searches) or Reports (Recent report).
+- Item cards (Home, Items, Profile) open Item details: placeholder picture, name, Lost/Found by, place and date, description, contact details, "Send a message" (opens Messages) and Back.
+- Make a report: every box must be filled and Lost or Found ticked, then "Next Step" opens step 2 (description, category, date, photo; the photo box only pretends) and step 3 (review lines with Back and "Submit report"). The typed words travel inside the Intent. Submit returns to Home and opens Reports.
+- Reports: see step 1 above. Landscape keeps the table with the "tick all" box.
+- Messages: landscape shows the chat list with the conversation on the right; portrait opens a tapped chat full screen with a Back arrow (`ChatActivity`). The typing box and Send add your message as a new bubble on the right; nothing is saved. The bubbles have example sentences.
+- Settings: the five tabs switch pages. The Account page has pencils that turn a line into an editable box, a Gender pick, a Language drop-down and a "Save changes" button that only shows a message. "Log out" is under "Other settings" and returns to Login.
 
 ### Open decisions
 
-- The worksheet has typos ("Dont", "Alternitive"). They are kept as in the design. Ask before fixing.
-- Lost items, Found items and all portrait screens except Home were designed by Claude in the style of the samples, because the PDF does not include them.
-- Next Step skips steps 2 and 3 (see above).
+- Grammar fixes from the worksheet typos were approved and applied. The joke item names stay.
+- Claude designed these screens in the style of the samples, because the PDF does not have them: Lost items, Found items, all portrait screens except Home, Reports, Profile, report steps 2 and 3, Item details. For each one, ask the student how it should look.
+- The student will send new samples; the contact values in Settings wait for them.
+- Teacher check pending: whether Java copying an XML row design counts as "XML for everything".
 
 ### Tools
 
@@ -128,10 +162,10 @@ Done:
 
 Not done yet:
 
-- Run `gradlew :app:testDebugUnitTest` (or the test in Android Studio) to confirm both console tests pass. This was not re-run after the FoundIt rebuild.
 - Add `lf-out/` to the root `.gitignore` and save it.
 - `config.properties.example` still has what looks like a real Supabase host and username. Replace them with placeholders.
-- Steps 2 and 3 of "Making a report", item detail pages and a real conversation screen are not built. Do not add them or any data wiring unless the student asks.
+- Run the new screens on a phone or emulator and fix what looks wrong. `gradlew :app:testDebugUnitTest` passes (both console tests, 2026-11-18).
+- Firebase and any data wiring: not started. Do not add them unless the student asks.
 - Optional, only if asked: using the school logo, moving text to `strings.xml`.
 
 ## XML explanation (given in chat, not saved to a file)
@@ -147,6 +181,7 @@ The student asked for a detailed explanation of how XML works and what it did fo
 - Identity: commits are authored as `Andrei`. On the home PC the repo config says `Andrei <andreisalew2010@gmail.com>`. Older notes said `peejaysale001@gmail.com`; confirm which the student wants. The global `~/.gitconfig` on the second PC says `clyde` with a school email, so check `git config user.name` and `git config user.email` before committing on a new machine. GitHub only shows the student's profile on a commit if the commit email is added and verified under GitHub Settings, Emails.
 - Never force-push without the student's yes. `git push --force-with-lease` was used once, with their approval, to fix the author of a commit.
 - If `git rebase` or `git pull` stops with "untracked working tree files would be overwritten" for `lf-out/`, move the `lf-out/` folder aside (it is regenerated by `javac`) and retry.
+- The UI plan work was written in a Claude worktree on branch `sample-screens-ui`, started from `origin/sample-screens` (`ff6a614`). It is not committed or pushed until the student asks.
 - A leftover branch `sample-screens-work` may exist in a Claude worktree under `.claude/worktrees/`. It can be deleted.
 
 ## Emulator notes

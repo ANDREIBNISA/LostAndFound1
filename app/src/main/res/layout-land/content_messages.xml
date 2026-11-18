@@ -226,12 +226,22 @@
     </LinearLayout>
 
     <!-- Right: the open conversation. It scrolls when the bubbles do not fit. -->
-    <ScrollView
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="62"
+        android:orientation="vertical"
         android:padding="8dp">
 
-        <include layout="@layout/include_conversation" />
-    </ScrollView>
+        <ScrollView
+            android:id="@+id/chatScroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <include layout="@layout/include_conversation" />
+        </ScrollView>
+
+        <include layout="@layout/include_chat_input" />
+    </LinearLayout>
 </LinearLayout>

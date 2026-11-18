@@ -85,6 +85,62 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- A heading inside the Settings Account page ("Account info", "Personal", ...). -->
+    <style name="FoundIt.SettingsHeading" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <!-- The value of a line such as "Username: User12345". It looks like plain text until the
+         pencil is tapped; then Java turns it into a white box you can type in. -->
+    <style name="FoundIt.SettingsValue" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">38dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">6dp</item>
+        <item name="android:background">@null</item>
+        <item name="android:enabled">false</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">4dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:imeOptions">flagNoExtractUi|actionDone</item>
+    </style>
+
+    <!-- The pencil at the end of a Settings line. -->
+    <style name="FoundIt.PencilButton" parent="">
+        <item name="android:layout_width">38dp</item>
+        <item name="android:layout_height">38dp</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:src">@drawable/ic_edit</item>
+        <item name="android:contentDescription">Edit</item>
+    </style>
+
+    <!-- The small dark "Verified" tag next to a value. -->
+    <style name="FoundIt.VerifiedChip" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_status_chip</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:text">✓ Verified</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!-- A chat bubble in the Messages conversation. -->
     <style name="FoundIt.Bubble" parent="">
         <item name="android:layout_width">wrap_content</item>

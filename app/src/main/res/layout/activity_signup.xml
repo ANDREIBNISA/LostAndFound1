@@ -195,7 +195,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
                     android:layout_marginTop="2dp"
-                    android:hint="Eg. Social Media"
+                    android:hint="Ex. Social Media"
                     android:imeOptions="flagNoExtractUi|actionDone"
                     android:importantForAutofill="no"
                     android:inputType="text" />

@@ -44,8 +44,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void setUpNavigation() {
         setUpScreenButtons();
 
-        // Tapping the avatar and name opens Settings.
-        onClickOpen(R.id.profileRow, R.id.navSettings);
+        // Portrait: the avatar and name open your Profile. Landscape keeps opening Settings.
+        boolean portrait = findViewById(R.id.bottomNav) != null;
+        onClickOpen(R.id.profileRow, portrait ? R.id.navProfile : R.id.navSettings);
+        setUpItemsTabs();
 
         setUpMoreMenu();
         setUpSearch();
@@ -59,10 +61,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (bottomNav != null) {
             // Portrait: the bottom bar.
             Menu menu = bottomNav.getMenu();
-            if (menu.findItem(currentNavId()) != null) {
-                bottomNav.setSelectedItemId(currentNavId());
+            int tabId = portraitTabId();
+            if (menu.findItem(tabId) != null) {
+                bottomNav.setSelectedItemId(tabId);
             } else {
-                // Report status and Messages are not in the bottom bar, so show all five as gray.
+                // This screen has no tab of its own, so show all five as gray.
                 ColorStateList gray = ColorStateList.valueOf(getColor(R.color.fi_nav_gray));
                 bottomNav.setItemIconTintList(gray);
                 bottomNav.setItemTextColor(gray);
@@ -87,7 +90,38 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    /** The three dots in the portrait header: the screens that are not in the bottom bar. */
+    /**
+     * Which of the five portrait tabs lights up on this screen. Lost items and Found items
+     * are both the "Items" tab, Make a report belongs to "Reports", Settings to "Profile".
+     */
+    private int portraitTabId() {
+        int id = currentNavId();
+        if (id == R.id.navLost || id == R.id.navFound) {
+            return R.id.navItems;
+        }
+        if (id == R.id.navReport) {
+            return R.id.navStatus;
+        }
+        if (id == R.id.navSettings) {
+            return R.id.navProfile;
+        }
+        return id;
+    }
+
+    /** The Lost / Found tabs at the top of the portrait Items screens (the XML has them only in portrait). */
+    private void setUpItemsTabs() {
+        View lostTab = findViewById(R.id.itemsTabLost);
+        View foundTab = findViewById(R.id.itemsTabFound);
+        if (lostTab == null || foundTab == null) {
+            return;
+        }
+        lostTab.setSelected(currentNavId() == R.id.navLost);
+        foundTab.setSelected(currentNavId() == R.id.navFound);
+        lostTab.setOnClickListener(v -> openScreen(R.id.navLost));
+        foundTab.setOnClickListener(v -> openScreen(R.id.navFound));
+    }
+
+    /** The three dots in the portrait header: Settings and Log out. */
     private void setUpMoreMenu() {
         View moreButton = findViewById(R.id.moreButton);
         if (moreButton == null) {
@@ -140,7 +174,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         Class<?> target = null;
         if (navId == R.id.navHome) {
             target = HomeActivity.class;
-        } else if (navId == R.id.navLost) {
+        } else if (navId == R.id.navProfile) {
+            target = ProfileActivity.class;
+        } else if (navId == R.id.navLost || navId == R.id.navItems) {
             target = LostItemsActivity.class;
         } else if (navId == R.id.navFound) {
             target = FoundItemsActivity.class;
@@ -185,7 +221,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /** Called by the item cards in the XML (android:onClick="onItemCardClick"). */
     public void onItemCardClick(View card) {
-        toast("Item details are not built yet");
+        Intent intent = new Intent(this, ItemDetailsActivity.class);
+        intent.putExtra(ItemDetailsActivity.EXTRA_KIND, currentNavId() == R.id.navFound ? "Found" : "Lost");
+        startActivity(intent);
     }
 
     // ---------- Small helpers ----------

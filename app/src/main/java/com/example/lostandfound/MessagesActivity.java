@@ -1,12 +1,16 @@
 package com.example.lostandfound;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 /**
  * Screen 05: Messages. The four chats and the conversation bubbles are written in the XML
- * (the conversation is in include_conversation.xml).
+ * (the bubbles are in include_chat_bubbles.xml).
+ *
+ * Landscape: the conversation is on the right of the list, so tapping a chat only switches it.
+ * Portrait: tapping a chat opens it full screen in ChatActivity, like a messaging app.
  * Each chat row carries its latest message in its android:tag, and its name TextView is tagged "name".
  */
 public class MessagesActivity extends BaseActivity {
@@ -31,6 +35,19 @@ public class MessagesActivity extends BaseActivity {
         TextView chatTitle = findViewById(R.id.chatTitle);
         TextView chatBubble = findViewById(R.id.chatBubble);
 
+        if (chatTitle == null || chatBubble == null) {
+            // Portrait: this screen is only the list.
+            for (View row : rows) {
+                row.setOnClickListener(v -> {
+                    TextView name = row.findViewWithTag("name");
+                    Intent chat = new Intent(this, ChatActivity.class);
+                    chat.putExtra(ChatActivity.EXTRA_NAME, name.getText().toString());
+                    startActivity(chat);
+                });
+            }
+            return;
+        }
+
         for (View row : rows) {
             row.setOnClickListener(v -> {
                 // Highlight only the chat that was tapped.
@@ -45,5 +62,7 @@ public class MessagesActivity extends BaseActivity {
         }
         // As in the design, the first chat starts open.
         rows[0].performClick();
+
+        ChatHelper.setUpSend(this);
     }
 }

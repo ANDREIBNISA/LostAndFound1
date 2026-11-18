@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The typing box and Send button under a conversation. ChatHelper makes Send add your
+     message as a new bubble on the right. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <EditText
+        android:id="@+id/chatInput"
+        style="@style/FoundIt.InputWhite"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_weight="1"
+        android:hint="Type a message"
+        android:imeOptions="flagNoExtractUi|actionSend"
+        android:inputType="textCapSentences"
+        android:textSize="14sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/sendButton"
+        style="@style/FoundIt.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/bg_action_button"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:text="Send"
+        android:textSize="15sp" />
+</LinearLayout>

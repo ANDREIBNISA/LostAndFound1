@@ -89,7 +89,7 @@
                     android:layout_height="34dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/bg_green_button"
-                    android:text="Login to Found it"
+                    android:text="Log in to FoundIt"
                     android:textSize="14sp" />
 
                 <TextView
@@ -126,7 +126,7 @@
                     android:gravity="center"
                     android:paddingStart="60dp"
                     android:paddingEnd="60dp"
-                    android:text="Login with google"
+                    android:text="Log in with Google"
                     android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -137,7 +137,7 @@
                     android:layout_marginTop="6dp"
                     android:background="@drawable/bg_white_button"
                     android:textColor="@color/black"
-                    android:text="Login with MCS Email account"
+                    android:text="Log in with MCS Email account"
                     android:textSize="14sp" />
 
                 <TextView

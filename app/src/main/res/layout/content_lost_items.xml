@@ -13,8 +13,10 @@
 
         <TextView
             style="@style/FoundIt.SectionTitle"
-            android:text="Lost items"
+            android:text="Items"
             android:textSize="22sp" />
+
+        <include layout="@layout/include_items_tabs" />
 
         <include layout="@layout/card_lost" />
 
