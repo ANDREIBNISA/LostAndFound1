@@ -29,5 +29,13 @@
         <include layout="@layout/card_lost" />
 
         <include layout="@layout/card_lost" />
+
+        <include layout="@layout/card_lost" />
+
+        <include layout="@layout/card_lost" />
+
+        <include layout="@layout/card_lost" />
+
+        <include layout="@layout/card_lost" />
     </LinearLayout>
 </ScrollView>

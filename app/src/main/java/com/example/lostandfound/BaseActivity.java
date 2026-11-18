@@ -6,13 +6,18 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import java.util.ArrayList;
+import java.util.List;
+
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -30,7 +35,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
  * There is no database or real login yet, so all the names and items are
  * placeholder text typed into the XML, and the buttons only change screens.
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends NoSlideActivity {
 
     /** Which button belongs to the screen you are on, for example R.id.navHome. */
     protected abstract int currentNavId();
@@ -48,6 +53,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         boolean portrait = findViewById(R.id.bottomNav) != null;
         onClickOpen(R.id.profileRow, portrait ? R.id.navProfile : R.id.navSettings);
         setUpItemsTabs();
+        fillItemCards();
 
         setUpMoreMenu();
         setUpSearch();
@@ -223,7 +229,100 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onItemCardClick(View card) {
         Intent intent = new Intent(this, ItemDetailsActivity.class);
         intent.putExtra(ItemDetailsActivity.EXTRA_KIND, currentNavId() == R.id.navFound ? "Found" : "Lost");
+        // Pass on the words shown on the card, so the details page matches what was tapped.
+        TextView name = card.findViewById(R.id.cardItemName);
+        TextView by = card.findViewById(R.id.cardItemBy);
+        if (name != null && by != null) {
+            intent.putExtra(ItemDetailsActivity.EXTRA_NAME, valueAfterColon(name.getText().toString()));
+            String byText = by.getText().toString();
+            intent.putExtra(ItemDetailsActivity.EXTRA_KIND, byText.startsWith("Found") ? "Found" : "Lost");
+            intent.putExtra(ItemDetailsActivity.EXTRA_BY, valueAfterColon(byText));
+        }
+        // Cards on the Profile screen have their own text views.
+        TextView profileName = card.findViewById(R.id.profileCardName);
+        TextView profileMeta = card.findViewById(R.id.profileCardMeta);
+        if (profileName != null && profileMeta != null) {
+            intent.putExtra(ItemDetailsActivity.EXTRA_NAME, profileName.getText().toString());
+            intent.putExtra(ItemDetailsActivity.EXTRA_KIND,
+                    profileMeta.getText().toString().startsWith("Lost") ? "Lost" : "Found");
+        }
         startActivity(intent);
+    }
+
+    // ---------- Placeholder text on the item cards ----------
+
+    // Placeholder items. When the database arrives, the cards will show real reports instead.
+    private static final String[] LOST_NAMES = {
+            "Black leather wallet", "Blue umbrella", "Silver water bottle", "Casio calculator",
+            "House keys with red tag", "AirPods case", "Gray hoodie", "Math notebook",
+            "Phone charger", "Prescription glasses", "Student ID card", "iPair 67 pro max 64tb",
+            "rtx4090", "Green lunchbox", "ryzen 9 9980x3d", "Black backpack",
+            "Wristwatch", "Gaming mouse", "Over-ear headphones", "White sneakers",
+            "USB flash drive", "Navy baseball cap", "Science textbook", "Silver laptop",
+            "Pencil case"};
+    private static final String[] FOUND_NAMES = {
+            "Black umbrella", "Red water bottle", "Scientific calculator", "Set of keys",
+            "White earbuds", "Blue jacket", "Science notebook", "Laptop charger",
+            "Brown wallet", "Reading glasses", "Library card", "128gb ddr5 ram",
+            "Pencil case", "Yellow lunchbox", "1,000$ worth of cash", "Gray backpack",
+            "Silver watch", "Wireless mouse", "Bluetooth headphones", "Running shoes",
+            "Flash drive 1tb", "Red cap", "History book", "Black laptop",
+            "Samsung Galaxy phone"};
+    private static final String[] USERS = {
+            "User67", "User12", "User88", "User45", "User203", "User31", "User76", "User90",
+            "User18", "User55", "User402", "User27", "User64", "User09", "User83"};
+
+    /**
+     * The cards are copies of one XML design, so each one starts with "Item:" and "Lost by: User67".
+     * This gives every card on the screen its own placeholder item name and user.
+     */
+    private void fillItemCards() {
+        List<TextView> names = new ArrayList<>();
+        List<TextView> bys = new ArrayList<>();
+        collectCardTexts(findViewById(android.R.id.content), names, bys);
+
+        for (int i = 0; i < names.size() && i < bys.size(); i++) {
+            String byText = bys.get(i).getText().toString();
+            boolean found = byText.startsWith("Found");
+            String[] pool = found ? FOUND_NAMES : LOST_NAMES;
+            // Spread the names around so neighbours differ, and the same card is the same each time.
+            int pick = (i * 7 + (found ? 3 : 0)) % pool.length;
+            names.get(i).setText("Item: " + pool[pick]);
+            bys.get(i).setText((found ? "Found by: " : "Lost by: ") + USERS[(i * 7 + pick) % USERS.length]);
+            showCardPicture(names.get(i), pool[pick]);
+        }
+    }
+
+    /** Put the photo that matches the item name into the card this name belongs to. */
+    private void showCardPicture(View nameView, String itemName) {
+        // Climb to the card itself (the tappable block), then look for its picture. Tiles have none.
+        View card = nameView;
+        while (card.getParent() instanceof View && !card.hasOnClickListeners()) {
+            card = (View) card.getParent();
+        }
+        ImageView picture = card.findViewById(R.id.cardPicture);
+        if (picture != null) {
+            picture.setImageResource(ItemPictures.forName(itemName));
+        }
+    }
+
+    private void collectCardTexts(View view, List<TextView> names, List<TextView> bys) {
+        if (view.getId() == R.id.cardItemName) {
+            names.add((TextView) view);
+        } else if (view.getId() == R.id.cardItemBy) {
+            bys.add((TextView) view);
+        }
+        if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) view;
+            for (int i = 0; i < group.getChildCount(); i++) {
+                collectCardTexts(group.getChildAt(i), names, bys);
+            }
+        }
+    }
+
+    private String valueAfterColon(String text) {
+        int colon = text.indexOf(':');
+        return colon < 0 ? text : text.substring(colon + 1).trim();
     }
 
     // ---------- Small helpers ----------

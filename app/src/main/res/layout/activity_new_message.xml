@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Start a message to anyone, including new users. Opened by the + button on Messages. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/screenRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fi_content_bg"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/fi_topbar"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="6dp"
+        android:paddingTop="6dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="6dp">
+
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="Back to messages"
+            android:focusable="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_arrow_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="New message"
+            android:textColor="@color/white"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp"
+            android:background="@drawable/bg_panel"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <TextView
+                style="@style/FoundIt.Label"
+                android:layout_marginStart="4dp"
+                android:text="To (username)" />
+
+            <EditText
+                android:id="@+id/toInput"
+                style="@style/FoundIt.Input"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginTop="2dp"
+                android:hint="Ex. User99999"
+                android:inputType="text" />
+
+            <TextView
+                style="@style/FoundIt.Label"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="10dp"
+                android:text="Message" />
+
+            <EditText
+                android:id="@+id/firstMessageInput"
+                style="@style/FoundIt.Input"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:layout_marginTop="2dp"
+                android:gravity="top|start"
+                android:hint="Write your first message"
+                android:inputType="textCapSentences|textMultiLine"
+                android:paddingTop="8dp"
+                android:singleLine="false" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/sendNewMessageButton"
+                style="@style/FoundIt.Button"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_action_button"
+                android:text="Send"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -17,11 +17,16 @@
 
     <TextView
         style="@style/FoundIt.CardText"
+        android:id="@+id/cardItemName"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="Item:"
         android:textSize="14sp" />
 
     <TextView
         style="@style/FoundIt.CardText"
+        android:id="@+id/cardItemBy"
+        android:ellipsize="end"
         android:text="Lost by: User67"
         android:textSize="14sp" />
 </LinearLayout>

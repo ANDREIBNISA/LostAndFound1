@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Placeholder picture: card. Drawn as an XML vector, no photo file needed. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="80dp"
+    android:viewportWidth="120"
+    android:viewportHeight="80">
+    <path android:fillColor="#1F5F8B" android:pathData="M0,0 L120,0 L120,80 L0,80 Z" />
+    <path android:fillColor="#F5F5F5" android:pathData="M26,20 L94,20 L94,62 L26,62 Z" />
+    <path android:fillColor="#A8A8A8" android:pathData="M32,28 L50,28 L50,48 L32,48 Z" />
+    <path android:fillColor="#00000000" android:strokeColor="#7A8794" android:strokeWidth="3" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M56,30 L88,30 M56,38 L84,38 M56,46 L80,46" />
+</vector>

@@ -17,17 +17,23 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="62dp"
+        android:id="@+id/cardPicture"
         android:contentDescription="Item picture"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_picture_placeholder" />
 
     <TextView
         style="@style/FoundIt.CardText"
         android:layout_marginTop="4dp"
+        android:id="@+id/cardItemName"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="Item:" />
 
     <TextView
         style="@style/FoundIt.CardText"
         android:maxLines="1"
+        android:id="@+id/cardItemBy"
+        android:ellipsize="end"
         android:text="Found by: User67" />
 </LinearLayout>

@@ -1,27 +1,31 @@
 package com.example.lostandfound;
 
 import android.os.Bundle;
-import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 /**
- * One conversation on the whole screen (portrait). It opens from a row in the chat list and
- * the Back arrow returns to the list. The bubbles are placeholder text in the XML.
+ * One conversation on the whole screen. It opens from a row in the chat list (portrait) or after
+ * a new message is sent. The Back arrow returns to the list. The messages come from ChatStore.
  */
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends NoSlideActivity {
 
-    public static final String EXTRA_NAME = "chatName";
+    public static final String EXTRA_USERNAME = "chatUsername";
+
+    private ChatStore.Chat chat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        String name = getIntent().getStringExtra(EXTRA_NAME);
-        ((TextView) findViewById(R.id.chatTitle)).setText(name == null ? "" : name);
+        chat = ChatStore.find(getIntent().getStringExtra(EXTRA_USERNAME));
+        if (chat == null) {
+            finish();
+            return;
+        }
+        ChatHelper.showChat(this, chat, null);
 
         findViewById(R.id.backArrow).setOnClickListener(v -> finish());
-        ChatHelper.setUpSend(this);
+        ChatHelper.setUpSend(this, () -> chat, null);
     }
 }

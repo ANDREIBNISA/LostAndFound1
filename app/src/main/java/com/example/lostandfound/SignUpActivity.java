@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Sign up screen. It opens from the "Click here to Sign up!" line on Login.
@@ -14,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * are optional because they can be set later in Settings.
  * When Firebase is added, the saving goes in createAccount().
  */
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends NoSlideActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

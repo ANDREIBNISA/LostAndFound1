@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Drop-down from the other person's picture in a conversation. ChatHelper changes the
+     "Block" title to "Unblock" when you already blocked them. -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/chatVisitProfile"
+        android:title="Visit profile" />
+    <item
+        android:id="@+id/chatBlockToggle"
+        android:title="Block" />
+    <item
+        android:id="@+id/chatCancel"
+        android:title="Cancel" />
+</menu>

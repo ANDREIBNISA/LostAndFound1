@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- The open conversation in Messages: who you are talking to, then the chat bubbles.
-     Their messages are on the left, yours are on the right. Used by both orientations.
-     The bubble texts are placeholders until real messages come from the database. -->
+<!-- The open conversation in landscape Messages: who you are talking to (display name first,
+     then the username), then the chat bubbles. Their messages are on the left, yours on the right. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/conversation"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <!-- Header: avatar and name of the other person -->
+    <!-- Header: avatar, display name and username of the other person -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,18 +19,34 @@
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:id="@+id/chatAvatar"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
             android:contentDescription="Profile picture"
             android:src="@drawable/ic_avatar" />
 
-        <TextView
-            android:id="@+id/chatTitle"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="User67890"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/chatTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/chatUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/fi_hint"
+                android:textSize="12sp" />
+        </LinearLayout>
     </LinearLayout>
 
     <include layout="@layout/include_chat_bubbles" />

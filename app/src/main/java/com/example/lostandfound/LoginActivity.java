@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Screen 01: Login.
@@ -14,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * "Log in to FoundIt" opens Home once both boxes are filled in, and the Google and MCS buttons
  * open Home straight away. When Firebase is added, the check goes in logIn().
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends NoSlideActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

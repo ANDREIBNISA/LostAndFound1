@@ -16,8 +16,9 @@
     <ImageView
         android:layout_width="76dp"
         android:layout_height="54dp"
+        android:id="@+id/cardPicture"
         android:contentDescription="Item picture"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_picture_placeholder" />
 
     <LinearLayout
@@ -29,11 +30,16 @@
 
         <TextView
             style="@style/FoundIt.CardText"
+            android:id="@+id/cardItemName"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="Item:"
             android:textSize="16sp" />
 
         <TextView
             style="@style/FoundIt.CardText"
+            android:id="@+id/cardItemBy"
+            android:ellipsize="end"
             android:text="Found by: User67"
             android:textSize="16sp" />
     </LinearLayout>

@@ -2,18 +2,23 @@ package com.example.lostandfound;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * Screen 05: Messages. The four chats and the conversation bubbles are written in the XML
- * (the bubbles are in include_chat_bubbles.xml).
+ * Screen 05: Messages. The chat list is a copy of the XML design item_chat_row.xml for every chat
+ * in ChatStore (display name first, then the username, then the latest message).
  *
- * Landscape: the conversation is on the right of the list, so tapping a chat only switches it.
+ * Landscape: the open conversation is on the right of the list, so tapping a chat only switches it.
  * Portrait: tapping a chat opens it full screen in ChatActivity, like a messaging app.
- * Each chat row carries its latest message in its android:tag, and its name TextView is tagged "name".
+ * The + button starts a message to a new user (NewMessageActivity).
  */
 public class MessagesActivity extends BaseActivity {
+
+    private ViewGroup chatList;
+    private ChatStore.Chat openChat;   // landscape only: the chat shown on the right
 
     @Override
     protected int currentNavId() {
@@ -26,43 +31,62 @@ public class MessagesActivity extends BaseActivity {
         setContentView(R.layout.activity_messages);
         setUpNavigation();
 
-        int[] rowIds = {R.id.chatRow1, R.id.chatRow2, R.id.chatRow3, R.id.chatRow4};
-        View[] rows = new View[rowIds.length];
-        for (int i = 0; i < rowIds.length; i++) {
-            rows[i] = findViewById(rowIds[i]);
+        chatList = findViewById(R.id.chatList);
+        findViewById(R.id.newMessageButton).setOnClickListener(v ->
+                startActivity(new Intent(this, NewMessageActivity.class)));
+
+        // Only the landscape layout has the conversation on the right.
+        boolean landscape = findViewById(R.id.chatMessages) != null;
+        if (landscape) {
+            openChat = ChatStore.all().get(0);
+            ChatHelper.showChat(this, openChat, this::showChatList);
+            ChatHelper.setUpSend(this, () -> openChat, this::showChatList);
         }
+        showChatList();
+    }
 
-        TextView chatTitle = findViewById(R.id.chatTitle);
-        TextView chatBubble = findViewById(R.id.chatBubble);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // A message may have been sent or started on another screen, so draw the list again.
+        if (chatList != null) {
+            showChatList();
+        }
+    }
 
-        if (chatTitle == null || chatBubble == null) {
-            // Portrait: this screen is only the list.
-            for (View row : rows) {
-                row.setOnClickListener(v -> {
-                    TextView name = row.findViewWithTag("name");
-                    Intent chat = new Intent(this, ChatActivity.class);
-                    chat.putExtra(ChatActivity.EXTRA_NAME, name.getText().toString());
-                    startActivity(chat);
-                });
+    /** Draw one row per chat, newest message first. */
+    private void showChatList() {
+        chatList.removeAllViews();
+        LayoutInflater inflater = LayoutInflater.from(this);
+        boolean landscape = findViewById(R.id.chatMessages) != null;
+
+        for (ChatStore.Chat chat : ChatStore.all()) {
+            if (chat.messages.isEmpty()) {
+                continue;   // a chat with nobody written to yet stays out of the list
             }
-            return;
-        }
+            View row = inflater.inflate(R.layout.item_chat_row, chatList, false);
+            ((TextView) row.findViewById(R.id.rowName)).setText(chat.displayName);
 
-        for (View row : rows) {
+            TextView rowUsername = row.findViewById(R.id.rowUsername);
+            boolean same = chat.displayName.equals(chat.username);
+            rowUsername.setText("@" + chat.username);
+            rowUsername.setVisibility(same ? View.GONE : View.VISIBLE);
+
+            ((TextView) row.findViewById(R.id.rowPreview)).setText(chat.preview());
+            row.setSelected(landscape && chat == openChat);
+
             row.setOnClickListener(v -> {
-                // Highlight only the chat that was tapped.
-                for (View other : rows) {
-                    other.setSelected(other == row);
+                if (landscape) {
+                    openChat = chat;
+                    ChatHelper.showChat(this, chat, this::showChatList);
+                    showChatList();
+                } else {
+                    Intent open = new Intent(this, ChatActivity.class);
+                    open.putExtra(ChatActivity.EXTRA_USERNAME, chat.username);
+                    startActivity(open);
                 }
-                // Show that person's name on top of the conversation and their message in the first bubble.
-                TextView name = row.findViewWithTag("name");
-                chatTitle.setText(name.getText());
-                chatBubble.setText((String) row.getTag());
             });
+            chatList.addView(row);
         }
-        // As in the design, the first chat starts open.
-        rows[0].performClick();
-
-        ChatHelper.setUpSend(this);
     }
 }

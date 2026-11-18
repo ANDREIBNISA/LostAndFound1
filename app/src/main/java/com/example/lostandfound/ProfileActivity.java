@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -89,6 +90,7 @@ public class ProfileActivity extends BaseActivity {
             View card = inflater.inflate(R.layout.item_profile_card, list, false);
             ((TextView) card.findViewById(R.id.profileCardName)).setText(item[0]);
             ((TextView) card.findViewById(R.id.profileCardMeta)).setText(item[1]);
+            ((ImageView) card.findViewById(R.id.cardPicture)).setImageResource(ItemPictures.forName(item[0]));
             list.addView(card);
         }
 

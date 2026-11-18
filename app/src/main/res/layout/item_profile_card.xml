@@ -16,8 +16,9 @@
     <ImageView
         android:layout_width="72dp"
         android:layout_height="52dp"
+        android:id="@+id/cardPicture"
         android:contentDescription="Item picture"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_picture_placeholder" />
 
     <LinearLayout

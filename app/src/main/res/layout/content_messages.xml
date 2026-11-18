@@ -1,217 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Portrait Messages: the chat list. Tapping a chat opens it full screen (ChatActivity). -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Portrait Messages: the chat list fills the whole panel. A + button on the right starts a
+     message to a new user. Tapping a chat opens it full screen (ChatActivity). The rows inside
+     chatList are copies of item_chat_row.xml made by MessagesActivity. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fi_content_bg">
+    android:background="@color/fi_content_bg"
+    android:orientation="vertical"
+    android:padding="14dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="14dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@drawable/bg_panel"
         android:orientation="vertical"
         android:padding="10dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:text="Messages"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_card_dark"
-            android:orientation="vertical"
-            android:padding="4dp">
-            
-            <LinearLayout
-                android:id="@+id/chatRow1"
-                android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_chat_row"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:text="Messages"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/newMessageButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_circle_button"
                 android:clickable="true"
+                android:contentDescription="New message"
                 android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="6dp"
-                android:tag="Hey i found the item you reported.">
-            
-                <ImageView
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:contentDescription="Profile picture"
-                    android:src="@drawable/ic_avatar" />
-            
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-            
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:tag="name"
-                        android:text="User67890"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-            
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="User67890: Hey i found the ite..."
-                        android:textColor="@color/white"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </LinearLayout>
-            
-            <LinearLayout
-                android:id="@+id/chatRow2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_chat_row"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="6dp"
-                android:tag="Where can we meet so I can return it?">
-            
-                <ImageView
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:contentDescription="Profile picture"
-                    android:src="@drawable/ic_avatar" />
-            
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-            
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:tag="name"
-                        android:text="User54321"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-            
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="User67890: Where can we mee..."
-                        android:textColor="@color/white"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </LinearLayout>
-            
-            <LinearLayout
-                android:id="@+id/chatRow3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_chat_row"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="6dp"
-                android:tag="Hey i found the item you reported.">
-            
-                <ImageView
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:contentDescription="Profile picture"
-                    android:src="@drawable/ic_avatar" />
-            
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-            
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:tag="name"
-                        android:text="User38576"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-            
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="User67890: Hey i found the ite..."
-                        android:textColor="@color/white"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </LinearLayout>
-            
-            <LinearLayout
-                android:id="@+id/chatRow4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_chat_row"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="6dp"
-                android:tag="Hey i found the item you reported.">
-            
-                <ImageView
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:contentDescription="Profile picture"
-                    android:src="@drawable/ic_avatar" />
-            
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-            
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:tag="name"
-                        android:text="User42198"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-            
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="User67890: Hey i found the ite..."
-                        android:textColor="@color/white"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </LinearLayout>
+                android:padding="9dp"
+                android:src="@drawable/ic_add" />
         </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_card_dark">
+
+            <LinearLayout
+                android:id="@+id/chatList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="4dp" />
+        </ScrollView>
     </LinearLayout>
-</ScrollView>
+</LinearLayout>
