@@ -111,7 +111,7 @@ Firebase (sign-in only, written 2026-11-19 while the student slept):
 
 - `AuthService` is the one class that talks to Firebase Auth: `logIn`, `signUp` (keeps the username as the display name, then signs out so the person logs in on purpose), `sendPasswordReset`, `logOut`, `isLoggedIn`. Screens call only it. `isReal()` is false when Firebase is not configured, and then every method just succeeds, which is the old prototype behaviour.
 - Gradle: the Firebase BoM and `firebase-auth` are dependencies (`gradle/libs.versions.toml`). The `com.google.gms.google-services` plugin is applied in `app/build.gradle.kts` only if `app/google-services.json` exists, so the project builds without it. Checked: it builds with a dummy file on AGP 9.2.1, and without one.
-- `app/google-services.json` is git-ignored; `app/google-services.json.example` has fake values. Copy the real file to other PCs by hand. Never paste it or any key into chat.
+- `app/google-services.json` (the real Firebase file) is committed on purpose. The student decided this on 2026-11-19 so the school lab PC gets it through git; the repo is public, they were told, and they said they do not mind. It is a client config, not a password. Do not untrack it or put it back in `.gitignore` unless the student asks. Never paste its contents or any key into chat. If the key ever needs to be replaced, make a new one in the Firebase console (Project settings, Your apps) and download a new file.
 - Only emails can sign in (the login and sign-up boxes show a message for a username or mobile number when Firebase is on). Google and MCS login still open Home.
 - Next, when the student asks: test with their project, then Firestore for reports, items and messages (replacing the placeholder lists and `ChatStore`), then Google sign-in (needs the SHA-1 in Firebase).
 
@@ -185,7 +185,7 @@ Not done yet:
 - Add `lf-out/` to the root `.gitignore` and save it.
 - `config.properties.example` still has what looks like a real Supabase host and username. Replace them with placeholders.
 - Run the new screens on a phone or emulator and fix what looks wrong. `gradlew :app:testDebugUnitTest` passes (both console tests, 2026-11-18).
-- Firebase: the sign-in code is written and builds (branch `firebase-setup`, see "Firebase" in the UI plan section), but the student still has to make the Firebase project and add `app/google-services.json` by following `FIREBASE_SETUP.md`. Nothing is tested against a real project. Firestore (reports, items, messages) and Google sign-in are not started. Do not add them unless the student asks.
+- Firebase: the sign-in code is written and builds (see "Firebase" in the UI plan section). The student made the Firebase project, switched on Email/Password and added the Android app (`com.example.lostandfound`, the Spark free plan); the real `app/google-services.json` is committed. Claude has not seen it tested on a phone yet, so ask the student whether sign up and log in work. Firestore (reports, items, messages) and Google sign-in are not started. Do not add them unless the student asks.
 - Optional, only if asked: using the school logo, moving text to `strings.xml`.
 
 ## XML explanation (given in chat, not saved to a file)

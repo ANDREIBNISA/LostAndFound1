@@ -50,9 +50,9 @@ is saved, exactly like before. Nothing breaks.
 
 ## Good to know
 
-- `google-services.json` is **not** committed to git (it is in `.gitignore`), because the repo rule is no real
-  settings in it. A fake example is in `app/google-services.json.example`. On another PC, copy your real
-  file into `app` by hand (USB stick or your own Drive).
+- `google-services.json` **is** committed to git, so another PC (like the school lab) gets it with a normal
+  `git pull`. The repo is public, so anyone can read it. It is a client config, not a password, but if you
+  ever want a fresh one, download a new file in the Firebase console (Project settings, Your apps).
 - Never paste the contents of that file, or any key, into a chat. If one is shared by mistake, make a new
   one in the Firebase console (Project settings, then Your apps).
 - If sign-in says "Something went wrong", check the phone has internet and that step 4 was saved.
