@@ -8,7 +8,7 @@ Android Studio project, Java. A lost and found prototype. There are two parts: a
 - The student does their own commits and pushes. Only commit or push if they ask.
 - The teacher requires the UI to be built in XML. Put everything you can see on screen in XML layouts (cards, table rows, chat rows, settings pages). Java only handles taps and opening the next screen. A repeated row or card may be copied by Java, but its design stays in XML (see the agreed UI plan).
 - Do not run `git init` in a folder that already has a `.git`. A fresh `git init` earlier caused "unrelated histories" errors.
-- Never put real credentials in the repo. A `config.properties` (git-ignored) with a committed `config.properties.example` is the plan for when a database is added later.
+- Never put real credentials in the repo. A `config.properties` (git-ignored) with a committed `config.properties.example` is the plan for when a database is added later. The one exception is the Firebase client file `app/google-services.json`, committed on purpose (see "Firebase").
 - Never paste or repeat tokens or passwords from the terminal in chat. Tell the student to revoke a token on GitHub if one was exposed.
 - Look before deleting anything. Earlier, a text file was wrongly called a folder.
 - Ask before fixing typos copied from the student's designs (see "Open decisions").
@@ -60,7 +60,7 @@ javac -d ..\..\..\..\lf-out com\example\quarter2\minipeta3\ConsoleLauncher.java
 java -cp ..\..\..\..\lf-out com.example.quarter2.minipeta3.ConsoleLauncher
 ```
 
-Recompile with `javac` after any code change. `lf-out/` is build output and is no longer tracked by git. The root `.gitignore` does not list it yet (only `app/.gitignore` has `/lf-out`, which covers the wrong folder), so it shows as untracked until `lf-out/` is added to the root `.gitignore`. Run the integration test by right-clicking `LostAndFoundFlowTest` in Android Studio, or `gradlew :app:testDebugUnitTest`.
+Recompile with `javac` after any code change. `lf-out/` is build output, git-ignored in the root `.gitignore`. Run the integration test by right-clicking `LostAndFoundFlowTest` in Android Studio, or `gradlew :app:testDebugUnitTest`.
 
 ## FoundIt app: Worksheet 5 UI prototype (current task)
 
@@ -70,7 +70,7 @@ Design pages: 1 Login (landscape), 2 Home (landscape), 3 Home as a portrait phon
 
 ### Agreed UI plan before Firebase (settled with the student 2026-11-18)
 
-The UI is being finished before Firebase is added. Real accounts come later through Firebase, with email and password as the main sign-in. Until then the login buttons only open Home. Build in three steps. The student runs the app after each step and says what to change.
+The UI was finished before Firebase. Real accounts go through Firebase, with email and password as the main sign-in. It was built in three steps; the student ran the app after each step and said what to change.
 
 Rules for all steps:
 
@@ -81,11 +81,12 @@ Rules for all steps:
 
 All three steps are built and `assembleDebug` passes (2026-11-19). Claude has never seen the app running. The student ran an earlier build on a real phone (USB debugging) and sent the feedback that is now built in (photos, more examples, new-user messages, other people's profiles, display name first, no slide animation). Newer changes may still need small layout fixes, so ask the student what they see.
 
-Handoff, where things stand (2026-11-19):
+Handoff, where things stand (2026-11-19, end of day):
 
+- `sample-screens` on GitHub (`a6ea047`) holds all the UI work, the Firebase email sign-in and the real `google-services.json`. The student's Firebase project (Spark free plan) has Email/Password switched on and the Android app `com.example.lostandfound` registered. The student has not tested sign up and log in yet and said they will test later, so ask what they see.
 - Done since the plan: placeholder photos and example items, Messages rework (`ChatStore`, `+` new message, full-screen chat, profile-picture drop-down with Block), other people's profiles, no slide animation. See "What the buttons do".
-- Next, in the order the student is likely to ask: fix whatever the student sees on the phone; replace the umbrella photo if its license is bad (`PHOTO_CREDITS.md`); the student's new sample screens (Settings contact values, Q3 in the plan); the student asked for a different example photo for the phone, a dated Samsung is in place; teacher check on Java copying XML designs; then Firebase (email and password sign-in, replacing `ChatStore` and the placeholder lists).
-- The student wants short, plain answers and at most five questions at a time.
+- Next, in the order the student is likely to ask: fix whatever they see on the phone or in sign-in; replace the umbrella photo if its license is bad (`PHOTO_CREDITS.md`); the student's new sample screens (Settings contact values); teacher check on Java copying XML designs; then Firestore (reports, items and messages, replacing `ChatStore` and the placeholder lists); then Google sign-in. The phone example photo is a dated Samsung; swap it only if the student asks.
+- The student wants short, plain answers and at most five questions at a time. Tell them when heavy work starts so they can raise the effort level.
 
 Step 1, portrait navigation (built):
 
@@ -107,13 +108,14 @@ Step 3, the rest (built; what was done is listed in "What the buttons do"):
 - Grammar fixes approved: "Don't have an account?", "Log in to FoundIt", "Log in with Google", "Log in with MCS Email account", "Click here to log in!", "Alternative contacts", "Two-step verification", "Ex." everywhere. Joke item names stay. Rename the app to "FoundIt" (`app_name` in `strings.xml`).
 - `UI_QUESTIONS.md` was deleted: its questions are settled in this plan.
 
-Firebase (sign-in only, written 2026-11-19 while the student slept):
+Firebase (sign-in only, set up 2026-11-19):
 
 - `AuthService` is the one class that talks to Firebase Auth: `logIn`, `signUp` (keeps the username as the display name, then signs out so the person logs in on purpose), `sendPasswordReset`, `logOut`, `isLoggedIn`. Screens call only it. `isReal()` is false when Firebase is not configured, and then every method just succeeds, which is the old prototype behaviour.
 - Gradle: the Firebase BoM and `firebase-auth` are dependencies (`gradle/libs.versions.toml`). The `com.google.gms.google-services` plugin is applied in `app/build.gradle.kts` only if `app/google-services.json` exists, so the project builds without it. Checked: it builds with a dummy file on AGP 9.2.1, and without one.
 - `app/google-services.json` (the real Firebase file) is committed on purpose. The student decided this on 2026-11-19 so the school lab PC gets it through git; the repo is public, they were told, and they said they do not mind. It is a client config, not a password. Do not untrack it or put it back in `.gitignore` unless the student asks. Never paste its contents or any key into chat. If the key ever needs to be replaced, make a new one in the Firebase console (Project settings, Your apps) and download a new file.
+- The Firebase app is registered under the package name `com.example.lostandfound`, which is the `applicationId` in `app/build.gradle.kts`. Renaming the `applicationId` later means registering a new Android app in Firebase and downloading a new `google-services.json`. The project is on the free Spark plan; Cloud Storage (real photo uploads) may need the paid Blaze plan, so check before promising photo uploads.
 - Only emails can sign in (the login and sign-up boxes show a message for a username or mobile number when Firebase is on). Google and MCS login still open Home.
-- Next, when the student asks: test with their project, then Firestore for reports, items and messages (replacing the placeholder lists and `ChatStore`), then Google sign-in (needs the SHA-1 in Firebase).
+- Next, when the student asks: Firestore for reports, items and messages (replacing the placeholder lists and `ChatStore`), then Google sign-in (needs the SHA-1 in Firebase).
 
 The sections below describe the app as it was before this plan; where they disagree with the plan, follow the plan.
 
@@ -162,7 +164,7 @@ The sections below describe the app as it was before this plan; where they disag
 
 ## Picking this up on another PC
 
-1. In the project folder run `git fetch`, `git switch sample-screens`, `git pull`. If the pull complains about untracked `lf-out/` files, move the `lf-out/` folder aside and pull again (see Git notes).
+1. In the project folder run `git fetch`, `git switch sample-screens`, `git pull`. The real `app/google-services.json` comes with the pull, so Firebase works without extra setup. If the pull complains about untracked `lf-out/` files, move the `lf-out/` folder aside and pull again (see Git notes).
 2. Check `git config user.name` and `git config user.email` before committing (see Git notes).
 3. In Android Studio let Gradle sync, then run `LostAndFoundFlowTest` (or `gradlew :app:testDebugUnitTest`) and confirm both tests pass: `fullProgramFlow` and `badMenuInputDoesNotCrash`.
 4. Run the app (a real phone is lighter than the emulator, see the emulator notes) and check the screens in portrait and landscape.
@@ -182,10 +184,9 @@ Done:
 
 Not done yet:
 
-- Add `lf-out/` to the root `.gitignore` and save it.
 - `config.properties.example` still has what looks like a real Supabase host and username. Replace them with placeholders.
 - Run the new screens on a phone or emulator and fix what looks wrong. `gradlew :app:testDebugUnitTest` passes (both console tests, 2026-11-18).
-- Firebase: the sign-in code is written and builds (see "Firebase" in the UI plan section). The student made the Firebase project, switched on Email/Password and added the Android app (`com.example.lostandfound`, the Spark free plan); the real `app/google-services.json` is committed. Claude has not seen it tested on a phone yet, so ask the student whether sign up and log in work. Firestore (reports, items, messages) and Google sign-in are not started. Do not add them unless the student asks.
+- Firebase: the sign-in code is written and builds (see "Firebase" in the UI plan section). The student made the Firebase project, switched on Email/Password and added the Android app (`com.example.lostandfound`, the Spark free plan); the real `app/google-services.json` is committed. The student said they will test later; ask whether sign up and log in work. Firestore (reports, items, messages) and Google sign-in are not started. Do not add them unless the student asks.
 - Optional, only if asked: using the school logo, moving text to `strings.xml`.
 
 ## XML explanation (given in chat, not saved to a file)
@@ -201,8 +202,8 @@ The student asked for a detailed explanation of how XML works and what it did fo
 - Identity: commits are authored as `Andrei`. On the home PC the repo config says `Andrei <andreisalew2010@gmail.com>`. Older notes said `peejaysale001@gmail.com`; confirm which the student wants. The global `~/.gitconfig` on the second PC says `clyde` with a school email, so check `git config user.name` and `git config user.email` before committing on a new machine. GitHub only shows the student's profile on a commit if the commit email is added and verified under GitHub Settings, Emails.
 - Never force-push without the student's yes. `git push --force-with-lease` was used once, with their approval, to fix the author of a commit.
 - If `git rebase` or `git pull` stops with "untracked working tree files would be overwritten" for `lf-out/`, move the `lf-out/` folder aside (it is regenerated by `javac`) and retry.
-- The UI plan work was written in a Claude worktree on branch `sample-screens-ui` and then moved into `sample-screens` in the main folder with `git merge --ff-only sample-screens-ui`. Push only when the student asks. A Claude session cannot Write files into the main folder (a hook blocks it), so it edits in its worktree, commits, and fast-forwards the main folder when the student asks.
-- A leftover branch `sample-screens-work` may exist in a Claude worktree under `.claude/worktrees/`. It can be deleted.
+- Claude writes its work in a worktree under `.claude/worktrees/` on its own branch, then moves it into `sample-screens` in the main folder with `git merge --ff-only <branch>`. A Claude session cannot Write files into the main folder (a hook blocks it) but can run git there. Commit and push only when the student asks.
+- The branches `sample-screens-ui` and `firebase-setup` are merged into `sample-screens`, and the old `sample-screens-work` is not needed. Check each one, then they can be deleted.
 
 ## Emulator notes
 
